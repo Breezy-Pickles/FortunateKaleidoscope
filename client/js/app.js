@@ -38,7 +38,8 @@ angular.module('sniphub', ['ngRoute','ui.router','sniphub.services','sniphub.sni
   return {
     elements: {
       body: $(document.body),
-      nav: $('nav')
+      nav: $('nav'),
+      themeOption: $('.themeOption')
     },
     theme: 'standard',
     changeTheme: function (theme) {
@@ -46,6 +47,7 @@ angular.module('sniphub', ['ngRoute','ui.router','sniphub.services','sniphub.sni
         this.theme = theme;
         this.elements['body'].attr('class', this.theme);
         this.elements['nav'].attr('class', this.theme);
+          this.elements['themeOption'].css('color', this.theme === 'standard' ? 'white' : 'red');
       } 
     } 
   };
