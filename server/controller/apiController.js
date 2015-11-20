@@ -19,9 +19,13 @@ module.exports = {
     res.json(dummyData);
   },
   writeSnippet: function (req, res) {
-    console.log('checking re.body',req.body);
-    helpers.writeSnippet(req, function () {
-        res.json({created: true});
-      });
+    var tags = req.body.tags;
+    helpers.addTags(tags)
+    .then (function (tags) {
+      helpers.writeSnippet(tags, req, function() {
+        res.json({created:true});
+      })
+    })
   }
+
 };

@@ -18,7 +18,10 @@
                   </span>
                 </a>
                 <span>
-                  <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.scope, snippet.user.username) ">Fork</a>
+                  <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.scope, snippet.tags, snippet.user.username) ">Fork</a>
+                </span>
+                <span class='tags'>Tags:
+                  <a ng-repeat="tag in snippet.tags">{{tag.tagname}}</a>
                 </span>
                 <span>
                   <a ng-show="snippet.user.username === loggedInUser" ui-sref="editSnippet({ id: loggedInUser, snippetId: snippet.id})">Edit<a>

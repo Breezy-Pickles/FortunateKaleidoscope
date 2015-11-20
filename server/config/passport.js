@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   // Using Dev Credentials
   var GITHUB_CLIENT_ID = require('../lib/secrets').GITHUB_CLIENT_ID;
   var GITHUB_CLIENT_SECRET = require('../lib/secrets').GITHUB_CLIENT_SECRET;
-  var CALLBACK_URL = 'http://localhost:3000/auth/github/callback';
+  var CALLBACK_URL = 'http://localhost:8000/auth/github/callback';
 }
 
 // Does a findOrCreate on user and returns a promise

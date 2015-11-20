@@ -64,5 +64,5 @@ Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
 module.exports = {
   User: User,
   Snippet: Snippet,
-  Tag: Tag,
+  Tag: Tag
 };
