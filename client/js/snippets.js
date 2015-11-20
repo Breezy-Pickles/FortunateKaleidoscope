@@ -22,6 +22,10 @@ angular.module('sniphub.snippets', ['hljs'])
       });
   };
 
+  $scope.filter = function (tag) {
+    $scope.searchText = tag.tagname;
+  };
+
   $scope.forkSnippet = function ( user, text, title, tabPrefix, scope, tag, forkedFrom ) {
     //calls the auth cookie parser to get the currently logged in username.
     user = $scope.loggedInUser

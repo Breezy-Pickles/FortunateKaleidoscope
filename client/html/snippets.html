@@ -21,15 +21,15 @@
                 <span>
                   <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.scope, snippet.tags, snippet.user.username) ">Fork</a>
                 </span>
-                <span class='tags'>Tags:
-                  <a ng-repeat="tag in snippet.tags">{{tag.tagname}}</a>
-                </span>
                 <span>
                   <a ng-show="snippet.user.username === loggedInUser" ui-sref="editSnippet({ id: loggedInUser, snippetId: snippet.id})">Edit<a>
                 </span>
                 <a href="/download/{{snippet.id}}" class="right btn-floating btn-small waves-effect waves-light blue">
                   <i class="mdi-content-archive">&nbsp;&nbsp;</i>
                 </a>
+                <div class='tags'>Tags: 
+                  <a ng-repeat="tag in snippet.tags" ng-click='filter(tag)'>{{tag.tagname}}</a>
+                </div>
               </div>
             </div>
           </div> <!-- materialize column -->
