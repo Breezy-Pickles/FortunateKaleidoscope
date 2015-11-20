@@ -18,8 +18,8 @@ angular.module('sniphub.editSnippet', [])
     });
   };
 
-  $scope.updateSnippet = function (snippetId, user, text, title, tabPrefix, scope) {
-    SniphubServices.updateSnippet(snippetId, user, text, title, tabPrefix, scope).then(function (response) {
+  $scope.updateSnippet = function (snippetId, user, text, title, tabPrefix, scope, tag) {
+    SniphubServices.updateSnippet(snippetId, user, text, title, tabPrefix, scope, tag).then(function (response) {
       // changes state on completion
       $state.go('snippets');
     });

@@ -3,6 +3,8 @@ var Promise = require('bluebird');
 var db = require('../db/dbconfig');
 var User = db.User;
 var Snippet = db.Snippet;
+var sequelize = require('sequelize');
+var chainer = new sequelize.Utils.QueryChainer;
 
 
 module.exports = {
@@ -35,8 +37,14 @@ module.exports = {
 
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
-    var tags = req.body.tags.map(function (tag) {
-      return { tagname: tag };
+    console.log('have entered writeSnippet', req.body);
+    var tags = req.body.tags.split(',');
+
+
+    tags = tags.map(function (tag) {
+      var obj = {tagname: tag};
+      chainer.add(Tag.findOrCreate(obj));
+      return obj;
     });
     // Parses snippet
     var snippet = escape(req.body.text);
@@ -51,7 +59,9 @@ module.exports = {
       tabPrefix: tab,
       title: snipTitle,
       scope: languageScope,
-      forkedFrom: forkedFrom
+      forkedFrom: forkedFrom,
+      upvote: 0,
+      Tags: tags
     };
     // Retrieves user name from request
     var user = req.user.username;
@@ -62,7 +72,8 @@ module.exports = {
       // if found, adjusts snippet userId to match found user's id
     }).then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post).then(function (post) {
+      Snippet.create(post, {include: [Tag]})
+      .then(function (post) {
         cb(null, post);
       });
     }).catch(cb);
