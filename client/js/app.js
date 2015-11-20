@@ -33,4 +33,24 @@ angular.module('sniphub', ['ngRoute','ui.router','sniphub.services','sniphub.sni
       }
     });
 
-});
+})
+.factory('colorTheme', function () {
+  return {
+    elements: {
+      body: $(document.body),
+      nav: $('nav')
+    },
+    theme: 'standard',
+    changeTheme: function (theme) {
+      if (this.theme !== theme) {
+        this.theme = theme;
+        this.elements['body'].attr('class', this.theme);
+        this.elements['nav'].attr('class', this.theme);
+      } 
+    } 
+  };
+})
+.controller('MainCtrl', ['$scope', 'colorTheme', function ($scope, colorTheme) {
+  $scope.theme = colorTheme.theme;
+  $scope.changeTheme = colorTheme.changeTheme.bind(colorTheme);
+}]);

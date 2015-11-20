@@ -13,9 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
-  <body>
+  <body class="standard">
     <div class="navbar-fixed" ng-controller='AuthController'>
-      <nav>
+      <nav class="standard">
         <div class='nav-wrapper'>
           <a ui-sref="snippets" class="brand-logo center">Snip<span class="sub">Hub</span></a>
           <ul id="nav-mobile" class="right">
@@ -27,6 +27,16 @@
                 <li><a ng-show="isAuth" ui-sref='users({ id: username })' class='create'>My Snippets</a></li>
                 <li><a ng-show="isAuth" href='/auth/logout' class='logout'>Logout</a><li>
                 <li><a ng-hide="isAuth" href='/auth/github' class='logout'>Login With Github</a></li>
+              <li class="dropdown" ng-controller="MainCtrl">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Choose Theme</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" ng-click="changeTheme('standard')" class="themeOption">Standard</a></li>
+                    <li><a href="#" ng-click="changeTheme('holiday')" class="themeOption">Holiday</a></li>
+                  </ul>
+              </li>
+    
+                  </ul>
+                </li>
               </div>
             </li>
           </ul>
