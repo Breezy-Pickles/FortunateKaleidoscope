@@ -1,8 +1,14 @@
-body {
-  background-color: #49483e;
+body.standard {
+  background-color: white;
 }
-nav {
-  background-color: #383830;
+body.holiday {
+  background-color: red;
+}
+nav.standard {
+  background-color: black;
+}
+nav.holiday {
+  background-color: green;
 }
 nav .brand-logo {
   /*margin-left: 20px;*/
@@ -18,3 +24,7 @@ nav form {
 .hljs {
   max-height: 120px;
 }
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+ }
