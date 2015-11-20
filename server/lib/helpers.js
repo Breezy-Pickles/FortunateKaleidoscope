@@ -3,7 +3,8 @@ var Promise = require('bluebird');
 var db = require('../db/dbconfig');
 var User = db.User;
 var Snippet = db.Snippet;
-
+var Tag = db.Tag;
+var Sequelize = require('Sequelize');
 
 module.exports = {
   findOrCreateUser: function (profile) {
@@ -33,17 +34,42 @@ module.exports = {
     });
   },
 
-  writeSnippet: function (req, cb) {
-    // takes the array of body tags and turns them into objects
-    var tags = req.body.tags.map(function (tag) {
-      return { tagname: tag };
-    });
+  addTags: function (tags, res) {
+    var tags = tags.split(',');
+
+    var createTag = function (tag) {
+      return Tag.findOrCreate({
+        where: {
+          tagname: tag
+        }
+      }).then(function (tag) {
+        return tag[0];
+      }).catch( function (err) {
+        return console.log(err);
+      });
+    };
+
+    return Promise.map(tags, createTag)
+    .then ( function (tags) {
+      // tags = tags.dataValues;
+      return tags;
+    })
+
+  },
+
+  writeSnippet: function (tags, req, cb) {
+    // takes the array of body tags and turns them into object
+
     // Parses snippet
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var forkedFrom = req.body.forkedFrom;
+    // tags = tags.map(function (tag) {
+    //    return {tagname: tag};
+    // });
+
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -51,7 +77,8 @@ module.exports = {
       tabPrefix: tab,
       title: snipTitle,
       scope: languageScope,
-      forkedFrom: forkedFrom
+      forkedFrom: forkedFrom,
+      upvote: 0
     };
     // Retrieves user name from request
     var user = req.user.username;
@@ -62,9 +89,11 @@ module.exports = {
       // if found, adjusts snippet userId to match found user's id
     }).then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post).then(function (post) {
-        cb(null, post);
-      });
+      Snippet.create(post)
+      .then(function (post) {
+        post.addTags(tags);
+        cb();
+      })
     }).catch(cb);
   },
 
@@ -110,8 +139,10 @@ module.exports = {
       order: 'createdAt DESC',
       include: [{
         model: User
-      }]
+      },
+      { model: Tag}]
     }).then(function (result) {
+      console.log('this is what we get from getting snippets', result[0]['tags']);
       return result;
     });
   },
@@ -129,6 +160,8 @@ module.exports = {
         },
         include: [{
           model: User
+        },{
+          model: Tag
         }]
       }).then(function (result) {
         //We are good here;
@@ -142,7 +175,7 @@ module.exports = {
   searchSnippets: function (searchTerm) {
     return Promise.map(searchTerm.split(' '), function (term) {
       return db.Snippets.findAll({ include: [{
-        model: db.Tags,
+        model: Tags,
         where: { tagname: term }
       }]});
     });

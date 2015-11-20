@@ -16,10 +16,10 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var addSnippet = function ( user, text, title, tabPrefix, scope, forkedFrom ) {
+  var addSnippet = function ( user, text, title, tabPrefix, scope, tags, forkedFrom) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
-
+    console.log('these are the params', arguments);
     return $http({
       method: 'POST',
       url: '/api/snippet',
@@ -29,7 +29,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [],
+        "tags" : tags,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
@@ -38,7 +38,7 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var updateSnippet = function ( snippetId, user, text, title, tabPrefix, scope, forkedFrom ) {
+  var updateSnippet = function ( snippetId, user, text, title, tabPrefix, scope, tags, forkedFrom) {
     forkedFrom = forkedFrom || null;
     return $http({
       method: 'POST',
@@ -49,7 +49,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [],
+        "tags" : tags,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {

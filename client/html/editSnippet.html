@@ -1,10 +1,14 @@
 <div ng-controller='EditSnippetController' id='container'>
   <div class="row">
-    <form class="col s12" ng-submit='updateSnippet(snippetId,userField, inputEntry, titleField , tabField, scope)'name ="AddSnippetForm">
+    <form class="col s12" ng-submit='updateSnippet(snippetId,userField, inputEntry, titleField , tabField, scope, tagField)'name ="AddSnippetForm">
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
           <input required type="text" class="validate text" type="text" name="text" ng-model='titleField'>
           <label for="last_name">Title</label>
+        </div>
+        <div class="input-field col s6">
+          <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
+          <label for="last_name">Tags</label>
         </div>
         <div class="input-field col s6">
           <select ng-model="scope">

@@ -34,7 +34,8 @@ var Snippet = sequelize.define('snippets', {
   tabPrefix : Sequelize.STRING,
   title : Sequelize.STRING,
   scope : Sequelize.STRING,
-  forkedFrom : Sequelize.STRING
+  forkedFrom : Sequelize.STRING, 
+  upvote: Sequelize.INTEGER
 });
 
 //TODO: Tag tables are inserted for later addition of tags
@@ -63,5 +64,5 @@ Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
 module.exports = {
   User: User,
   Snippet: Snippet,
-  Tag: Tag,
+  Tag: Tag
 };

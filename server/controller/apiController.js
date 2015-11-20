@@ -15,11 +15,17 @@ module.exports = {
   },
   searchSnips: function (req, res) {
     // TODO: Search snips by tag
+    // helpers.searchSnippets()
     res.json(dummyData);
   },
   writeSnippet: function (req, res) {
-    helpers.writeSnippet(req, function () {
-        res.json({created: true});
-      });
+    var tags = req.body.tags;
+    helpers.addTags(tags)
+    .then (function (tags) {
+      helpers.writeSnippet(tags, req, function() {
+        res.json({created:true});
+      })
+    })
   }
+
 };
