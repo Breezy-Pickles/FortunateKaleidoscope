@@ -97,6 +97,13 @@ module.exports = {
     }).catch(cb);
   },
 
+  getTags: function () {
+    return Tag.findAll({}).then(function (result) {
+      console.log('getting into the helpers!!!!!', result);
+      return result;
+    });
+  },
+
   getSnippet: function (snippetID) {
     return Snippet.findOne({
       where: {
@@ -142,7 +149,6 @@ module.exports = {
       },
       { model: Tag}]
     }).then(function (result) {
-      console.log('this is what we get from getting snippets', result[0]['tags']);
       return result;
     });
   },

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('sniphub', ['ngRoute','ui.router','sniphub.services','sniphub.snippets','sniphub.addSnippet', 'sniphub.auth', 'sniphub.snippetsUser','sniphub.editSnippet','sniphub.angular-ellipsis'])
+angular.module('sniphub', ['ngRoute','ngMaterial', 'ngAnimate', 'ngAria','ui.router','sniphub.services','sniphub.snippets','sniphub.addSnippet', 'sniphub.auth', 'sniphub.snippetsUser','sniphub.editSnippet','sniphub.angular-ellipsis'])
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   //Any state that isn't declared, redirects to snippets
   $urlRouterProvider.otherwise('snippets');

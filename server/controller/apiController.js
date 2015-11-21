@@ -3,6 +3,16 @@ var dummyData = require('../../test/dummyData');
 var helpers = require('../lib/helpers');
 
 module.exports = {
+  getTags: function (req, res) {
+    helpers.getTags().then( function (tags) {
+      var resTags = tags.map( function (tag) {
+        return tag.tagname;
+      });
+      console.log('inside the apiController', resTags);
+      res.send(resTags);
+    });
+  },
+  
   getTopTen: function (req, res) {
     helpers.getSnippetsMostRecent().then(function (snips) {
       var resSnips = snips.map(function (snip) {

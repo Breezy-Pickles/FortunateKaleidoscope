@@ -1,22 +1,35 @@
 // FIX ALL THIS
 angular.module('sniphub.snippets', ['hljs'])
 
-.controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
+.controller('SnippetsController', function (Auth, $scope, $state, SniphubServices) {
   $scope.snippets = [];
+
+  $scope.createSnippets = function () {
+    console.log('were getting a click');
+    $state.go('addSnippet');
+  };
+
+  $scope.fetchTags = function () {
+    SniphubServices.fetchTags().then( function (response) {
+      SniphubServices.tags.concat(response.data);
+    });
+    $scope.tags = SniphubServices.tags;
+  };
   
   $scope.getUsername = function () {
     $scope.loggedInUser = Auth.isAuth('username');
-  }
+  };
 
   $scope.fetchTopTen = function () {
     //call factory function
     SniphubServices.fetchTopTen()
       .then(function ( snippets ) {
-        console.log('return from fetch', snippets.data[0].tags);
         $scope.snippets = snippets.data;
         $scope.snippets.forEach(function (item) {
+          console.log(SniphubServices.tags);
           item.text = unescape(item.text);
           item.title = unescape(item.title);
+          SniphubServices.tags.push(item.title);
           item.tags = item.tags;
         });
       });
@@ -42,6 +55,7 @@ angular.module('sniphub.snippets', ['hljs'])
   $scope.$watch('$viewContentLoaded', function () {
     $scope.getUsername();
     $scope.fetchTopTen();
+    $scope.fetchTags();
   });
 
 });

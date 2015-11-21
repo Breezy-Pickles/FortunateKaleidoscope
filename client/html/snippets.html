@@ -1,6 +1,22 @@
-<div ng-controller="SnippetsController" id='container' >
+<div ng-controller="SnippetsController" id='container'>
+  <md-autocomplete
+      md-no-cache="ctrl.noCache"
+      md-selected-item="selectedItem"
+      md-search-text="searchText"
+      md-selected-item-change="ctrl.selectedTagChange(tag)"
+      md-items="tag in tags | filter:searchText"
+      md-item-text="tag"
+      md-min-length="0"
+      placeholder="Search snippets i.e. 'homework' ">
+    <md-item-template>
+      <span md-highlight-text="searchText" md-highlight-flags="^i">{{tag}}</span>
+    </md-item-template>
+    <md-not-found>
+      No snippets matching "{{searchText}}" were found.
+    </md-not-found>
+  </md-autocomplete>
+  
     <div class="container">
-      <input ng-model='searchText'>
       <div class="row">
         <div ng-repeat="snippet in snippets | filter:searchText" class="snippet">
           <div class="col s6">
