@@ -1,19 +1,19 @@
 // FIX ALL THIS
 angular.module('sniphub.snippets', ['hljs'])
 
-.controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
+.controller('SnippetsController', function (Auth, $scope, $state, SniphubServices) {
   $scope.snippets = [];
+
+  $scope.createSnippets = function () {
+    console.log('were getting a click');
+    $state.go('addSnippet');
+  };
 
   $scope.fetchTags = function () {
     SniphubServices.fetchTags().then( function (response) {
       SniphubServices.tags.concat(response.data);
-      $("#tags").autocomplete({
-        source: SniphubServices.tags,
-        delay: 100
-      });
-      console.log('in the controller and this is response', response.data);
-      console.log('what is the sniphub', SniphubServices.tags);
     });
+    $scope.tags = SniphubServices.tags;
   };
   
   $scope.getUsername = function () {
