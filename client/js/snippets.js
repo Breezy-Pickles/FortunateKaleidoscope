@@ -4,14 +4,14 @@ angular.module('sniphub.snippets', ['hljs'])
 .controller('SnippetsController', function (Auth, $scope, $state, SniphubServices) {
   $scope.snippets = [];
 
-  $scope.createSnippets = function () {
-    console.log('were getting a click');
-    $state.go('addSnippet');
-  };
 
   $scope.fetchTags = function () {
     SniphubServices.fetchTags().then( function (response) {
-      SniphubServices.tags.concat(response.data);
+      for(var i=0; i<response.data.length; i++){
+        if(SniphubServices.tags.indexOf(response.data[i]) === -1){
+          SniphubServices.tags.push(response.data[i]);
+        }
+      }
     });
     $scope.tags = SniphubServices.tags;
   };
@@ -22,6 +22,7 @@ angular.module('sniphub.snippets', ['hljs'])
 
   $scope.fetchTopTen = function () {
     //call factory function
+    SniphubServices.tags = [];
     SniphubServices.fetchTopTen()
       .then(function ( snippets ) {
         $scope.snippets = snippets.data;
