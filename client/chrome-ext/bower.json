@@ -1,0 +1,24 @@
+{
+  "name": "SnipHub",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tlevin/FortunateKaleidoscope",
+  "authors": [
+    "Hack Reactor Students <accounts@hackreactor.com>"
+  ],
+  "description": "Github for Snippets",
+  "main": "client/app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
