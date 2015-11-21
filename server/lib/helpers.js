@@ -136,10 +136,14 @@ module.exports = {
       where: {
         id: req.body.id
       }
-    }, function (thing) { return console.log("we're in it",thing)}).then(function (result) {
-      console.log('this is what returns from updating', result[0]);
-      result.addTags(tags);
-      return result;
+    }).then(function (result) {
+      return Snippet.find({
+        where: {
+          id: req.body.id
+        }
+      }).then( function (snippet){
+        snippet.addTags(tags);
+      })
     });
   },
   getSnippetsMostRecent: function () {
