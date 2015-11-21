@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var p = document.createElement('p');
     var dl = document.createElement('button');
     dl.innerText = "Download Snippet";
-    dl.addEventListener('click', function (e) {
-      e.preventDefault();
-      console.log(e.target.parentNode.childNodes[1].innerText);
-    });
+    dl.addEventListener('click', dlCallback);
     p.innerText = stuff;
     li.appendChild(dl);
     li.appendChild(p);
@@ -25,7 +22,25 @@ document.addEventListener('DOMContentLoaded', function(){
       var title = Object.keys(obj)[0];
       log(title);
     });
-  }
+  };
+  var dlCallback = function (event) {
+    event.preventDefault();
+    var title = event.target.parentNode.childNodes[1].innerText;    // Vanilla DOM traversal! =)
+    chrome.storage.local.get('snippetStore', function (store) {
+      for (var i = 0; i < store.snippetStore.length; ++i) {         // loop through array until key equals the title we're looking for
+        if (store.snippetStore[i].hasOwnProperty(title)) {
+          var encodedObj = btoa(JSON.stringify(store.snippetStore[i]));
+          var url = 'data:application/json;base64,' + encodedObj;
+              chrome.downloads.download({
+                  url: url,
+                  filename: title+'.txt',
+                  saveAs: true
+              });
+          return;
+        }
+      }
+    });
+  };
   // initialize new snippet store array if it doesn't already exist in local storage
   chrome.storage.local.get('snippetStore', function (snippetStore) {
     if (!Array.isArray(snippetStore.snippetStore)) {
@@ -67,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function(){
       content.innerHTML = '';                                                 // clear list before repopulating
       populateDiv(snippetStore.snippetStore, content);
     });
-    });
   });
+});
 
   // window.alert("ready");
 
