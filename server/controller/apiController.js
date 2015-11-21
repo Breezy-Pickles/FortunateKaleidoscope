@@ -6,10 +6,10 @@ module.exports = {
   getTags: function (req, res) {
     helpers.getTags().then( function (tags) {
       var resTags = tags.map( function (tag) {
-        console.log('inside the apiController', tag.tagname);
         return tag.tagname;
       });
-      res.json(resTags);
+      console.log('inside the apiController', resTags);
+      res.send(resTags);
     });
   },
   

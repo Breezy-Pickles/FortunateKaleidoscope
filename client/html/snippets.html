@@ -1,6 +1,9 @@
-<div ng-controller="SnippetsController" id='container' >
+<div ng-controller="SnippetsController" id='container'>
+  <div class="input-field col s4">
+    <input ng-model='searchText' id='tags'>
+  </div>
+  
     <div class="container">
-      <input ng-model='searchText'>
       <div class="row">
         <div ng-repeat="snippet in snippets | filter:searchText" class="snippet">
           <div class="col s6">

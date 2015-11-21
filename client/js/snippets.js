@@ -6,7 +6,13 @@ angular.module('sniphub.snippets', ['hljs'])
 
   $scope.fetchTags = function () {
     SniphubServices.fetchTags().then( function (response) {
-      console.log('in the controller and this is response', response);
+      SniphubServices.tags.concat(response.data);
+      $("#tags").autocomplete({
+        source: SniphubServices.tags,
+        delay: 100
+      });
+      console.log('in the controller and this is response', response.data);
+      console.log('what is the sniphub', SniphubServices.tags);
     });
   };
   
@@ -20,8 +26,10 @@ angular.module('sniphub.snippets', ['hljs'])
       .then(function ( snippets ) {
         $scope.snippets = snippets.data;
         $scope.snippets.forEach(function (item) {
+          console.log(SniphubServices.tags);
           item.text = unescape(item.text);
           item.title = unescape(item.title);
+          SniphubServices.tags.push(item.title);
           item.tags = item.tags;
         });
       });
@@ -47,6 +55,7 @@ angular.module('sniphub.snippets', ['hljs'])
   $scope.$watch('$viewContentLoaded', function () {
     $scope.getUsername();
     $scope.fetchTopTen();
+    $scope.fetchTags();
   });
 
 });

@@ -98,8 +98,8 @@ module.exports = {
   },
 
   getTags: function () {
-    console.log('getting into the helpers!!!!!');
-    return Tag.find({}).then(function (result) {
+    return Tag.findAll({}).then(function (result) {
+      console.log('getting into the helpers!!!!!', result);
       return result;
     });
   },

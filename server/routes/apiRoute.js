@@ -7,6 +7,7 @@ var userRoute = express.Router();
 
 module.exports = function (app) {
   app.get('/topten', apiController.getTopTen);
+  app.get('/tags', apiController.getTags);
   app.post('/search', apiController.searchSnips);
   app.post('/snippet', authMiddleware, apiController.writeSnippet);
   app.use('/user', userRoute);

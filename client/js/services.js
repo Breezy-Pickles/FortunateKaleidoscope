@@ -106,6 +106,8 @@ angular.module('sniphub.services', [])
       console.log('Error in getting snippets from db');
     });
   };
+
+  var tags = [];
   return {
     updateSnippet: updateSnippet,
     fetchBySnippetId: fetchBySnippetId,
@@ -113,7 +115,8 @@ angular.module('sniphub.services', [])
     addSnippet : addSnippet,
     fetchByUser: fetchByUser,
     searchByTerm : searchByTerm,
-    fetchTags: fetchTags
+    fetchTags: fetchTags,
+    tags: tags
   };
 })
 .factory('Auth', function ($http, $location, $window) {
