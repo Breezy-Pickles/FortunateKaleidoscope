@@ -21,18 +21,24 @@ module.exports = {
   },
   updateSnippet: function (req, res) {
     req.body.id = req.params.snippetID;
-    helpers.updateSnippet(req).then(function (result) {
-      res.json(result);
-    }).catch(function (err) {
-      console.log(err);
-      res.redirect('/');
-    });
+    var tags = req.body.tags;
+    console.log("getting into update snippet with these tags", tags)
+    helpers.addTags(tags)
+    .then( function (tags) {
+      console.log('getting past creating the tags', tags);
+      helpers.updateSnippet(tags, req).then(function (result) {
+        res.json(result);
+      }).catch(function (err) {
+        console.log(err);
+        res.redirect('/');
+      });
+    })
   },
   downloadSnippets: function (req, res) {
     // Get username
     var username = req.params.username;
     var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
-    var zipFolder = rootFolder + '/server/zip/' + Date.now() + '/';
+    var zipFolder = rootFolder + '/server/zip/' + Date.now() + '/';q
       // getSnippetsByUser ->
     helpers.getSnippetsByUser(username, function (err, results) {
        // convert each to json

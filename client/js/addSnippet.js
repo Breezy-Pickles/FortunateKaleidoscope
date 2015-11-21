@@ -9,6 +9,7 @@ angular.module('sniphub.addSnippet', [])
   }
   //call another method in services
   $scope.postSnippet = function (  user, text, title, tabPrefix, scope, tag ) {
+    var tag = tag.replace(/,\s+/g, ',').replace(/\s+,/g, '');
     SniphubServices.addSnippet( user, text, title, tabPrefix, scope, tag ).then(function ( response ) {
       $scope.submitted();
     });

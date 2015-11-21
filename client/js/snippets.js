@@ -8,9 +8,10 @@ angular.module('sniphub.snippets', ['hljs'])
   $scope.fetchTags = function () {
     SniphubServices.fetchTags().then( function (response) {
       for(var i=0; i<response.data.length; i++){
-        SniphubServices.tags.push(response.data[i]);
+        if(SniphubServices.tags.indexOf(response.data[i]) === -1){
+          SniphubServices.tags.push(response.data[i]);
+        }
       }
-      console.log('this is what we are fetching -', SniphubServices.tags);
     });
     $scope.tags = SniphubServices.tags;
   };

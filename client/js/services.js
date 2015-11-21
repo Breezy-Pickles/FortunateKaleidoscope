@@ -64,7 +64,7 @@ angular.module('sniphub.services', [])
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
-      console.log("after success")
+      console.log("after success");
       return response;
     });
 

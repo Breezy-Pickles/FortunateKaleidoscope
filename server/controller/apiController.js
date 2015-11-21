@@ -8,7 +8,6 @@ module.exports = {
       var resTags = tags.map( function (tag) {
         return tag.tagname;
       });
-      console.log('inside the apiController', resTags);
       res.send(resTags);
     });
   },

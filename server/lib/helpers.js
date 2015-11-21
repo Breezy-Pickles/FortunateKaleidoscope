@@ -99,7 +99,6 @@ module.exports = {
 
   getTags: function () {
     return Tag.findAll({}).then(function (result) {
-      console.log('getting into the helpers!!!!!', result);
       return result;
     });
   },
@@ -111,13 +110,15 @@ module.exports = {
       },
       include: [{
         model: User
+      }, {
+        model: Tag
       }]
     }).then(function (result) {
       return result;
     });
   },
 
-  updateSnippet: function (req) {
+  updateSnippet: function (tags, req) {
     // Parse and sanitize req
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
@@ -135,7 +136,9 @@ module.exports = {
       where: {
         id: req.body.id
       }
-    }).then(function (result) {
+    }, function (thing) { return console.log("we're in it",thing)}).then(function (result) {
+      console.log('this is what returns from updating', result[0]);
+      result.addTags(tags);
       return result;
     });
   },
