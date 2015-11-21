@@ -1,10 +1,16 @@
-
-// window.alert(typeof jQuery);
-
-
-
 document.addEventListener('DOMContentLoaded', function(){
-  chrome.storage.local.remove('snippetStore');
+
+  // =================== CACHE DOM CALLS ===================\\
+
+  var content = document.getElementById('content');
+  var addBtn = document.getElementById('add');
+  var title = document.getElementById('title');
+  var scope = document.getElementById('scope');
+  var prefix = document.getElementById('prefix');
+  var snippetText = document.getElementById('snippet');
+
+  // =================== DEFINE UTILITY FUNCTIONS ===================\\
+
   var log = function (stuff) {
     var li = document.createElement('li');
     var p = document.createElement('p');
@@ -25,8 +31,6 @@ document.addEventListener('DOMContentLoaded', function(){
   };
 
   var formatSnippet = function(snippetObj) {
-    // snippetObj is a big object with subSnippets stored by {title: snippetInfo}
-    // snippet title is the window into the snippet info
     var snippetTitle = Object.keys(snippetObj)[0];
     snippetObj = JSON.parse(snippetObj[snippetTitle]);
     console.log(snippetTitle);
@@ -57,7 +61,9 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
   };
-  // initialize new snippet store array if it doesn't already exist in local storage
+
+  // =================== LOAD SNIPPETSTORE OR INITIALIZE NEW ===================\\
+
   chrome.storage.local.get('snippetStore', function (snippetStore) {
     if (!Array.isArray(snippetStore.snippetStore)) {
       chrome.storage.local.set({ 'snippetStore': [] }, function () {
@@ -69,17 +75,9 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
-
-  // cache DOM calls
-  var content = document.getElementById('content');
-  var add = document.getElementById('add');
-  var title = document.getElementById('title');
-  var scope = document.getElementById('scope');
-  var prefix = document.getElementById('prefix');
-  var snippetText = document.getElementById('snippet');
-
-
-  add.addEventListener('click', function(event) {
+  // =================== SET UP EVENT LISTENER ===================\\
+  
+  addBtn.addEventListener('click', function(event) {
     event.preventDefault();
     var container = {};
     var snippet = {};
@@ -100,30 +98,3 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
-
-  // window.alert("ready");
-
-
-
-// $.ajax({
-//   type: 'POST',
-//   url: 'http://localhost:3000/api/snippet',
-//   // crossDomain: true,
-//   // header: {}
-//   data: {
-//       "username" : "tpduong",
-//       "text" : "text bhalkd asd",
-//       "tabPrefix" : "tabPrefix",
-//       "title" : "title",
-//       "scope" : "scope",
-//       "tags" : [],
-//       "forkedFrom" : "forkedFrom"
-//      },
-//   // dataType: 'json',
-//   success: function(response) {
-//       console.log(response);
-//   },
-//   error: function (response) {
-//       alert('POST failed.');
-//   }
-// });
