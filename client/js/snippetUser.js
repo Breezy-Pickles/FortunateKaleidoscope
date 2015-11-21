@@ -1,6 +1,7 @@
 angular.module('sniphub.snippetsUser', [])
 
 .controller('SnippetsUserController', function (Auth, $state, $stateParams, $scope, $location, SniphubServices) {
+$scope.tags = SniphubServices.tags;
 $scope.snippets = [];
 $scope.username = '';
 $scope.params = $stateParams;

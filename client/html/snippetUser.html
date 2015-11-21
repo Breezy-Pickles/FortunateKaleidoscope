@@ -1,10 +1,24 @@
 <div ng-controller="SnippetsUserController" id='container' >
+    <md-autocomplete
+        md-no-cache="ctrl.noCache"
+        md-selected-item="selectedItem"
+        md-search-text="searchText"
+        md-items="tag in tags | filter:searchText"
+        md-item-text="tag"
+        md-min-length="0"
+        placeholder="Search snippets i.e. 'homework' ">
+      <md-item-template>
+        <span md-highlight-text="searchText" md-highlight-flags="^i">{{tag}}</span>
+      </md-item-template>
+      <md-not-found>
+        No snippets matching "{{searchText}}" were found.
+      </md-not-found>
+    </md-autocomplete>
     <div class="container">
       <a href="/api/user/{{username}}/download" class="btn waves-effect waves-light orange grey-text text-darken-4">
         <i class="mdi-content-archive">&nbsp;&nbsp;</i>
         Download All
       </a>
-      <input ng-model='searchText'>
       <div class="row">
         <div ng-repeat="snippet in snippets | filter: searchText" class="snippet">
           <div class="col s6">
