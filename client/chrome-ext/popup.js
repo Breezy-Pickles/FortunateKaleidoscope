@@ -4,7 +4,7 @@
 
 
 document.addEventListener('DOMContentLoaded', function(){
-
+  chrome.storage.local.remove('snippetStore');
   var log = function (stuff) {
     var li = document.createElement('li');
     var p = document.createElement('p');
@@ -23,18 +23,34 @@ document.addEventListener('DOMContentLoaded', function(){
       log(title);
     });
   };
+
+  var formatSnippet = function(snippetObj) {
+    // snippetObj is a big object with subSnippets stored by {title: snippetInfo}
+    // snippet title is the window into the snippet info
+    var snippetTitle = Object.keys(snippetObj)[0];
+    snippetObj = JSON.parse(snippetObj[snippetTitle]);
+    console.log(snippetTitle);
+    console.dir(snippetObj);
+    var str = "<snippet><content><![CDATA[" + snippetObj.text +
+    "]]></content><tabTrigger>" + snippetObj.prefix+ 
+    "</tabTrigger><scope>" + snippetObj.scope + "</scope></snippet>";
+    console.log(str);
+    return str;
+  };
+
   var dlCallback = function (event) {
     event.preventDefault();
     var title = event.target.parentNode.childNodes[1].innerText;    // Vanilla DOM traversal! =)
     chrome.storage.local.get('snippetStore', function (store) {
       for (var i = 0; i < store.snippetStore.length; ++i) {         // loop through array until key equals the title we're looking for
         if (store.snippetStore[i].hasOwnProperty(title)) {
-          var encodedObj = btoa(JSON.stringify(store.snippetStore[i]));
+          var encodedObj = btoa(formatSnippet(store.snippetStore[i]));
           var url = 'data:application/json;base64,' + encodedObj;
               chrome.downloads.download({
                   url: url,
-                  filename: title+'.txt',
-                  saveAs: true
+                  filename: title+'.sublime-snippet',
+                  saveAs: true,
+                  conflictAction: "prompt"
               });
           return;
         }
@@ -60,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var title = document.getElementById('title');
   var scope = document.getElementById('scope');
   var prefix = document.getElementById('prefix');
-  var snippet = document.getElementById('snippet');
+  var snippetText = document.getElementById('snippet');
 
 
   add.addEventListener('click', function(event) {
@@ -71,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function(){
     snippet.title = title.value;
     snippet.scope = scope.value;
     snippet.prefix = prefix.value;
-    snippet.text = snippet.value;
+    snippet.text = snippetText.value;
 
     container[snippet.title] = JSON.stringify(snippet);
 
