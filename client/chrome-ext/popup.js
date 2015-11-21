@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // =================== DEFINE UTILITY FUNCTIONS ===================\\
   var utils = {};
-  
+
   utils.log = function (stuff) {
     var li = document.createElement('li');
     var p = document.createElement('p');
@@ -86,6 +86,11 @@ document.addEventListener('DOMContentLoaded', function(){
     snippet.scope = scope.value;
     snippet.prefix = prefix.value;
     snippet.text = snippetText.value;
+
+    if (snippet.title === '' || snippet.text === '') {                        // affirm snippet has title and text
+      title.placeholder = snippetText.placeholder = 'Required field!';
+      return;
+    }
 
     container[snippet.title] = JSON.stringify(snippet);
 
