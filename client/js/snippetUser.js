@@ -16,8 +16,12 @@ $scope.fetchByUser = function ( user ) {
         });
       });
   };
+  $scope.filter = function (tag) {
+    $scope.searchText = tag.tagname;
+  };
+
   $scope.$watch('$viewContentLoaded', function () {
     $scope.fetchByUser($scope.params.id);
   });
 
-})
+});

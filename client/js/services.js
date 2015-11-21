@@ -4,6 +4,17 @@ angular.module('sniphub.services', [])
 
 .factory('SniphubServices', function ($http) {
 
+  var fetchTags = function () { 
+    return $http({
+      method: 'GET',
+      url:'/api/tags'
+    }).then( function successCallback (response) {
+      return response;
+    }, function errorCallback (response) {
+      console.log('Error in getting tags from db');
+    });
+  };
+
   var fetchTopTen = function () {
     return $http({
       method: 'GET',
@@ -101,7 +112,8 @@ angular.module('sniphub.services', [])
     fetchTopTen : fetchTopTen,
     addSnippet : addSnippet,
     fetchByUser: fetchByUser,
-    searchByTerm : searchByTerm
+    searchByTerm : searchByTerm,
+    fetchTags: fetchTags
   };
 })
 .factory('Auth', function ($http, $location, $window) {

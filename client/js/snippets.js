@@ -3,16 +3,21 @@ angular.module('sniphub.snippets', ['hljs'])
 
 .controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
   $scope.snippets = [];
+
+  $scope.fetchTags = function () {
+    SniphubServices.fetchTags().then( function (response) {
+      console.log('in the controller and this is response', response);
+    });
+  };
   
   $scope.getUsername = function () {
     $scope.loggedInUser = Auth.isAuth('username');
-  }
+  };
 
   $scope.fetchTopTen = function () {
     //call factory function
     SniphubServices.fetchTopTen()
       .then(function ( snippets ) {
-        console.log('return from fetch', snippets.data[0].tags);
         $scope.snippets = snippets.data;
         $scope.snippets.forEach(function (item) {
           item.text = unescape(item.text);
