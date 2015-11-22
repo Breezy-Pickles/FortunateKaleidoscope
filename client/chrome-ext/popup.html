@@ -1,107 +1,107 @@
-
 <html>
   <head>
     <title>SnipHub</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
 
   <body>
-
-
+    <a ui-sref="snippets" class="brand-logo center">Snip<span class="sub">Hub</span></a>
     <form id="snippetForm">
       <div>
         <label>Title :</label><br>
-        <input id="title"/>
+        <input id="title" size="26" required/>
       </div>
-      <div class="input-field col s6">
+      <div class="inline">
         <label>Scope :</label><br>
         <select id="scope">
           <option value="" disabled selected>Choose Scope</option>
-          <option value="source.actionscript.2" ng-model='scope'>ActionScript</option>
-          <option value="source.applescript" ng-model='scope'>AppleScript</option>
-          <option value="source.asp" ng-model='scope'>ASP</option>
-          <option value="source.dosbatch" ng-model='scope'>Batch FIle</option>
-          <option value="source.cs" ng-model='scope'>C#</option>
-          <option value="source.c++" ng-model='scope'>C++</option>
-          <option value="source.clojure" ng-model='scope'>Clojure</option>
-          <option value="source.coffee" ng-model='scope'>CoffeeScript</option>
-          <option value="source.css" ng-model='scope'>CSS</option>
-          <option value="source.d" ng-model='scope'>D</option>
-          <option value="source.diff" ng-model='scope'>Diff</option>
-          <option value="source.erlang" ng-model='scope'>Erlang</option>
-          <option value="source.go" ng-model='scope'>Go</option>
-          <option value="source.dot" ng-model='scope'>GraphViz</option>
-          <option value="source.groovy" ng-model='scope'>Groovy</option>
-          <option value="source.haskell" ng-model='scope'>Haskell</option>
-          <option value="text.html(.basic)" ng-model='scope'>HTML</option>
-          <option value="text.html.jsp" ng-model='scope'>JSP</option>
-          <option value="source.java" ng-model='scope'>Java</option>
-          <option value="source.java-props" ng-model='scope'>Java Properties</option>
-          <option value="text.html.javadoc" ng-model='scope'>Java Doc</option>
-          <option value="source.json" ng-model='scope'>JSON</option>
-          <option value="source.js" ng-model='scope'>Javascript</option>
-          <option value="source.bibtex" ng-model='scope'>BibTex</option>
-          <option value="text.log.latex" ng-model='scope'>Latex Log</option>
-          <option value="text.tex.latex.memoir" ng-model='scope'>Latex Memoir</option>
-          <option value="text.tex.latex" ng-model='scope'>Latex</option>
-          <option value="source.css.less" ng-model='scope'>LESS</option>
-          <option value="text.tex" ng-model='scope'>TeX</option>
-          <option value="source.lisp" ng-model='scope'>Lisp</option>
-          <option value="source.lua" ng-model='scope'>Lua</option>
-          <option value="source.makefile" ng-model='scope'>MakeFile</option>
-          <option value="text.html.markdown" ng-model='scope'>Markdown</option>
-          <option value="text.html.markdown.multimarkdown" ng-model='scope'>Multi Markdown</option>
-          <option value="source.matlab" ng-model='scope'>Matlab</option>
-          <option value="source.objc" ng-model='scope'>Objective-C</option>
-          <option value="source.objc++" ng-model='scope'>Objective-C++</option>
-          <option value="source.camlp4.ocaml" ng-model='scope'>OCaml campl4</option>
-          <option value="source.ocaml" ng-model='scope'>OCaml</option>
-          <option value="source.ocamllex" ng-model='scope'>OCamllex</option>
-          <option value="source.perl" ng-model='scope'>Perl</option>
-          <option value="source.php" ng-model='scope'>PHP</option>
-          <option value="source.regexp.python" ng-model='scope'>Regular Expression(python)</option>
-          <option value="source.python" ng-model='scope'>Python</option>
-          <option value="source.r-console" ng-model='scope'>R Console</option>
-          <option value="source.r" ng-model='scope'>R</option>
-          <option value="source.ruby.rails" ng-model='scope'>Ruby on Rails</option>
-          <option value="text.haml" ng-model='scope'>Ruby HAML</option>
-          <option value="source.sql.ruby" ng-model='scope'>SQL(Ruby)</option>
-          <option value="source.regexp" ng-model='scope'>Regular Expression</option>
-          <option value="text.restructuredtext" ng-model='scope'>RestructuredText</option>
-          <option value="source.ruby" ng-model='scope'>Ruby</option>
-          <option value="source.sass" ng-model='scope'>SASS</option>
-          <option value="source.scala" ng-model='scope'>Scala</option>
-          <option value="source.shell" ng-model='scope'>Shell Script</option>
-          <option value="source.sql" ng-model='scope'>SQL</option>
-          <option value="source.stylus" ng-model='scope'>Stylus</option>
-          <option value="source.tcl" ng-model='scope'>TCL</option>
-          <option value="text.html.tcl" ng-model='scope'>HTML(TCL)</option>
-          <option value="text.plain" ng-model='scope'>Plain text</option>
-          <option value="text.html.textile" ng-model='scope'>Textile</option>
-          <option value="text.xml" ng-model='scope'>XML</option>
-          <option value="text.xml.xsl" ng-model='scope'>XSL</option>
-          <option value="source.yaml" ng-model='scope'>YAML</option>
+          <option value="source.actionscript.2">ActionScript</option>
+          <option value="source.applescript">AppleScript</option>
+          <option value="source.asp">ASP</option>
+          <option value="source.dosbatch">Batch FIle</option>
+          <option value="source.cs">C#</option>
+          <option value="source.c++">C++</option>
+          <option value="source.clojure">Clojure</option>
+          <option value="source.coffee">CoffeeScript</option>
+          <option value="source.css">CSS</option>
+          <option value="source.d">D</option>
+          <option value="source.diff">Diff</option>
+          <option value="source.erlang">Erlang</option>
+          <option value="source.go">Go</option>
+          <option value="source.dot">GraphViz</option>
+          <option value="source.groovy">Groovy</option>
+          <option value="source.haskell">Haskell</option>
+          <option value="text.html(.basic)">HTML</option>
+          <option value="text.html.jsp">JSP</option>
+          <option value="source.java">Java</option>
+          <option value="source.java-props">Java Properties</option>
+          <option value="text.html.javadoc">Java Doc</option>
+          <option value="source.json">JSON</option>
+          <option value="source.js">Javascript</option>
+          <option value="source.bibtex">BibTex</option>
+          <option value="text.log.latex">Latex Log</option>
+          <option value="text.tex.latex.memoir">Latex Memoir</option>
+          <option value="text.tex.latex">Latex</option>
+          <option value="source.css.less">LESS</option>
+          <option value="text.tex">TeX</option>
+          <option value="source.lisp">Lisp</option>
+          <option value="source.lua">Lua</option>
+          <option value="source.makefile">MakeFile</option>
+          <option value="text.html.markdown">Markdown</option>
+          <option value="text.html.markdown.multimarkdown">Multi Markdown</option>
+          <option value="source.matlab">Matlab</option>
+          <option value="source.objc">Objective-C</option>
+          <option value="source.objc++">Objective-C++</option>
+          <option value="source.camlp4.ocaml">OCaml campl4</option>
+          <option value="source.ocaml">OCaml</option>
+          <option value="source.ocamllex">OCamllex</option>
+          <option value="source.perl">Perl</option>
+          <option value="source.php">PHP</option>
+          <option value="source.regexp.python">Regular Expression(python)</option>
+          <option value="source.python">Python</option>
+          <option value="source.r-console">R Console</option>
+          <option value="source.r">R</option>
+          <option value="source.ruby.rails">Ruby on Rails</option>
+          <option value="text.haml">Ruby HAML</option>
+          <option value="source.sql.ruby">SQL(Ruby)</option>
+          <option value="source.regexp">Regular Expression</option>
+          <option value="text.restructuredtext">RestructuredText</option>
+          <option value="source.ruby">Ruby</option>
+          <option value="source.sass">SASS</option>
+          <option value="source.scala">Scala</option>
+          <option value="source.shell">Shell Script</option>
+          <option value="source.sql">SQL</option>
+          <option value="source.stylus">Stylus</option>
+          <option value="source.tcl">TCL</option>
+          <option value="text.html.tcl">HTML(TCL)</option>
+          <option value="text.plain">Plain text</option>
+          <option value="text.html.textile">Textile</option>
+          <option value="text.xml">XML</option>
+          <option value="text.xml.xsl">XSL</option>
+          <option value="source.yaml">YAML</option>
         </select>
       </div>
 
-      <div class="input-field col s6">
+      <div class="inline">
         <label for="last_name">Tab Prefix :</label><br>
-        <input id="prefix" required type="text" class="validate text" type="text" name="text">
+        <input id="prefix" size="30" required type="text" class="validate text" type="text" name="text">
       </div>
 
-      <div class="input-field col s12">
+      <div>
         <label for="textarea1">Snippet :</label><br>
-        <textarea id="snippet" required maxlength="500" id="textarea1" name="text"></textarea>
+        <textarea id="snippet" required maxlength="500" id="textarea1" name="text"></textarea><p>
       </div>
 
 
       <div >
         <button id="add">Add Snippet</button>
       </div>
+      <hr>
 
 
     </form>
-      <div>
-        <ul id="content"></ul>
+      <div id="tableDiv">
+        <table id="content"></table>
       </div>
     <script src="popup.js"></script>
   </body>

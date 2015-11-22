@@ -1,0 +1,59 @@
+body {
+  background-color: #494840;
+  color: orange;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 12;
+}
+
+button#add {
+  background-color: orange;
+}
+
+button {
+  background-color: grey;
+  border-radius: 5px;
+}
+
+input, select, textarea {
+background-color: #BBB;
+border-radius: 5px;
+}
+
+td {
+  color: #EEE;
+  font-size: 12;
+}
+
+textarea {
+  width: 368px;
+  height: 75px;
+}
+
+.brand-logo {
+  /*margin-left: 20px;*/
+  color: #66d9ef;
+  font-size: 20;
+  text-align: center;
+  margin-left: 150px;
+}
+.sub {
+  color: #a6e22e;
+}
+
+.inline {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+#tableDiv {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
