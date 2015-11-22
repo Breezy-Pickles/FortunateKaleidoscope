@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // =================== CACHE DOM CALLS ===================\\
 
-  var content = document.getElementById('content');
+  var contentDiv = document.getElementById('content');
   var addBtn = document.getElementById('add');
   var title = document.getElementById('title');
   var scope = document.getElementById('scope');
@@ -16,12 +16,16 @@ document.addEventListener('DOMContentLoaded', function(){
     var li = document.createElement('li');
     var p = document.createElement('p');
     var dl = document.createElement('button');
+    var rm = document.createElement('p');
+    rm.innerText = 'X';
     dl.innerText = "Download Snippet";
     dl.addEventListener('click', utils.dlCallback);
+    rm.addEventListener('click', utils.rmCallback);
     p.innerText = stuff;
     li.appendChild(dl);
     li.appendChild(p);
-    content.appendChild(li);
+    li.appendChild(rm);
+    contentDiv.appendChild(li);
   };
 
   utils.populateDiv = function (source, div) {
@@ -31,6 +35,10 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   };
 
+  utils.renderSnippets = function (collection, divTarget) {
+    divTarget.innerHTML = '';
+    utils.populateDiv(collection, divTarget);
+  }
   utils.formatSnippet = function(snippetObj) {
     var snippetTitle = Object.keys(snippetObj)[0];
     snippetObj = JSON.parse(snippetObj[snippetTitle]);
@@ -62,6 +70,20 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   };
 
+  utils.rmCallback = function (event) {
+    var title = event.target.parentNode.childNodes[1].innerText;
+    chrome.storage.local.get('snippetStore', function (store) {
+      for (var i = 0; i< store.snippetStore.length; ++i){
+        if (store.snippetStore[i].hasOwnProperty(title)) {
+          store.snippetStore.splice(i, 1);
+          chrome.storage.local.set({'snippetStore': store.snippetStore})
+          utils.renderSnippets(store.snippetStore, contentDiv);
+          return;
+        }
+      }
+    })
+  }
+
   // =================== LOAD SNIPPETS OR INITIALIZE NEW ARRAY ===================\\
 
   chrome.storage.local.get('snippetStore', function (snippetStore) {
@@ -71,11 +93,11 @@ document.addEventListener('DOMContentLoaded', function(){
       })
     }
     else {
-      utils.populateDiv(snippetStore.snippetStore, content);
+      utils.populateDiv(snippetStore.snippetStore, contentDiv);
     }
   });
 
-  // =================== SET UP EVENT LISTENER ===================\\
+  // =================== SET UP EVENT LISTENERS ===================\\
   
   addBtn.addEventListener('click', function(event) {
     event.preventDefault();
@@ -106,8 +128,8 @@ document.addEventListener('DOMContentLoaded', function(){
       else {        
       snippetStore.snippetStore.push(container);                              // push the new object :: {title: objJSONString}
       chrome.storage.local.set({'snippetStore': snippetStore.snippetStore});   // set snippetStore as new updated array
-      content.innerHTML = '';                                                 // clear list before repopulating
-      utils.populateDiv(snippetStore.snippetStore, content);
+      contentDiv.innerHTML = '';                                                 // clear list before repopulating
+      utils.renderSnippets(snippetStore.snippetStore, contentDiv);
 
       title.value = snippetText.value = prefix.value = '';                    // reset form fields
       title.focus();
