@@ -13,19 +13,26 @@ document.addEventListener('DOMContentLoaded', function(){
   var utils = {};
 
   utils.log = function (stuff) {
-    var li = document.createElement('li');
-    var p = document.createElement('p');
+    var tr = document.createElement('tr');
+    var titleCell = document.createElement('td');
+    var dlCell = document.createElement('td');
+    var rmCell = document.createElement('td');
     var dl = document.createElement('button');
-    var rm = document.createElement('p');
-    rm.innerText = 'X';
+
+    rmCell.className = "pointer";
+
+    rmCell.innerText = 'X';
     dl.innerText = "Download Snippet";
     dl.addEventListener('click', utils.dlCallback);
-    rm.addEventListener('click', utils.rmCallback);
-    p.innerText = stuff;
-    li.appendChild(dl);
-    li.appendChild(p);
-    li.appendChild(rm);
-    contentDiv.appendChild(li);
+    rmCell.addEventListener('click', utils.rmCallback);
+
+
+    titleCell.innerText = stuff;
+    dlCell.appendChild(dl);
+    tr.appendChild(titleCell);
+    tr.appendChild(dlCell);
+    tr.appendChild(rmCell)
+    contentDiv.appendChild(tr);
   };
 
   utils.populateDiv = function (source, div) {
@@ -42,17 +49,15 @@ document.addEventListener('DOMContentLoaded', function(){
   utils.formatSnippet = function(snippetObj) {
     var snippetTitle = Object.keys(snippetObj)[0];
     snippetObj = JSON.parse(snippetObj[snippetTitle]);
-    console.log(snippetTitle);
-    console.dir(snippetObj);
     var str = "<snippet><content><![CDATA[" + (snippetObj.text || '') +
-    "]]></content><tabTrigger>" + (snippetObj.prefix || '') + 
+    "]]></content><tabTrigger>" + (snippetObj.prefix || '') +
     "</tabTrigger><scope>" + (snippetObj.scope || '') + "</scope></snippet>";
     return str;
   };
 
   utils.dlCallback = function (event) {
     event.preventDefault();
-    var title = event.target.parentNode.childNodes[1].innerText;    // Vanilla DOM traversal! =)
+    var title = event.target.parentNode.parentNode.childNodes[0].innerText;    // Vanilla DOM traversal! =)
     chrome.storage.local.get('snippetStore', function (store) {
       for (var i = 0; i < store.snippetStore.length; ++i) {         // loop through array until key equals the title we're looking for
         if (store.snippetStore[i].hasOwnProperty(title)) {
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
   };
 
   utils.rmCallback = function (event) {
-    var title = event.target.parentNode.childNodes[1].innerText;
+    var title = event.target.parentNode.childNodes[0].innerText;
     chrome.storage.local.get('snippetStore', function (store) {
       for (var i = 0; i< store.snippetStore.length; ++i){
         if (store.snippetStore[i].hasOwnProperty(title)) {
@@ -98,13 +103,15 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   // =================== SET UP EVENT LISTENERS ===================\\
-  
+
   addBtn.addEventListener('click', function(event) {
     event.preventDefault();
     var container = {};
     var snippet = {};
 
     snippet.title = title.value;
+
+    console.log(snippet.title);
     snippet.scope = scope.value;
     snippet.prefix = prefix.value;
     snippet.text = snippetText.value;
@@ -121,11 +128,10 @@ document.addEventListener('DOMContentLoaded', function(){
         return Object.keys(snippetObj)[0] === snippet.title;
       });
       if (nameExists) {
-        console.log('Sorry, that title is already taken');
         title.value = '';
         title.placeholder = snippet.title +' is already taken . . .'
       }
-      else {        
+      else {
       snippetStore.snippetStore.push(container);                              // push the new object :: {title: objJSONString}
       chrome.storage.local.set({'snippetStore': snippetStore.snippetStore});   // set snippetStore as new updated array
       contentDiv.innerHTML = '';                                                 // clear list before repopulating
