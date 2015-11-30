@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>secrets.js</title>
+  <title>snippetUser.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -163,7 +163,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>secrets.js</h1>
+                  <h1>snippetUser.js</h1>
               </div>
           </li>
         
@@ -178,13 +178,47 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
-<span class="hljs-built_in">module</span>.exports = {
-  sql: <span class="hljs-string">'1234'</span>,
-  GITHUB_CLIENT_ID: <span class="hljs-string">'035afbf56400a0da13a8'</span>,
-  GITHUB_CLIENT_SECRET: <span class="hljs-string">'6ba93730762e55055cb73bc1c7c9d91f12427662'</span>,
-  SESSION_SECRET: <span class="hljs-string">'asda2313sgnfjbkjb2k34bhkqtbjvljcvj;&amp;*(*%$#@#$%UTFVGJ(*^R&amp;%E^$%WTD))'</span>
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>angular.module(<span class="hljs-string">'sniphub.snippetsUser'</span>, [])
+
+.controller(<span class="hljs-string">'SnippetsUserController'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Auth, $state, $stateParams, $scope, $location, SniphubServices</span>) </span>{
+$scope.tags = SniphubServices.tags;
+$scope.snippets = [];
+$scope.username = <span class="hljs-string">''</span>;
+$scope.params = $stateParams;
+$scope.fetchByUser = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> user </span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>call factory function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    SniphubServices.fetchByUser( user )
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> snippets </span>) </span>{
+        $scope.snippets = snippets.data;
+        $scope.username = snippets.data[<span class="hljs-number">0</span>].user.username;
+        $scope.snippets.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">item</span>) </span>{
+          item.text = <span class="hljs-built_in">unescape</span>(item.text);
+          item.title = <span class="hljs-built_in">unescape</span>(item.title);
+        });
+      });
+  };
+  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
+    $scope.searchText = tag.tagname;
+  };
+
+  $scope.$watch(<span class="hljs-string">'$viewContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $scope.fetchByUser($scope.params.id);
+  });
+
+});</pre></div></div>
             
         </li>
         

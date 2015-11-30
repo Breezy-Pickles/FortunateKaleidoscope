@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>userRoute.js</title>
+  <title>snippets.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -163,7 +163,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>userRoute.js</h1>
+                  <h1>snippets.js</h1>
               </div>
           </li>
         
@@ -175,10 +175,32 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              
+              <p>FIX ALL THIS</p>
+
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>angular.module(<span class="hljs-string">'sniphub.snippets'</span>, [<span class="hljs-string">'hljs'</span>])
+
+.controller(<span class="hljs-string">'SnippetsController'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Auth, $scope, $state, SniphubServices</span>) </span>{
+  $scope.snippets = [];
+
+
+  $scope.fetchTags = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    SniphubServices.fetchTags().then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;response.data.length; i++){
+        <span class="hljs-keyword">if</span>(SniphubServices.tags.indexOf(response.data[i]) === -<span class="hljs-number">1</span>){
+          SniphubServices.tags.push(response.data[i]);
+        }
+      }
+    });
+    $scope.tags = SniphubServices.tags;
+  };
+  
+  $scope.getUsername = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $scope.loggedInUser = Auth.isAuth(<span class="hljs-string">'username'</span>);
+  };
+
+  $scope.fetchTopTen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -189,17 +211,29 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>/api/user route</p>
+              <p>call factory function</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> userController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../controller/userController'</span>);
-<span class="hljs-keyword">var</span> authMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../config/authMiddleware'</span>).authMiddleware;
-<span class="hljs-keyword">var</span> confirmUserSnippet = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../config/authMiddleware'</span>).confirmUserSnippet;
+            <div class="content"><div class='highlight'><pre>    SniphubServices.tags = [];
+    SniphubServices.fetchTopTen()
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> snippets </span>) </span>{
+        $scope.snippets = snippets.data;
+        $scope.snippets.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">item</span>) </span>{
+          <span class="hljs-built_in">console</span>.log(SniphubServices.tags);
+          item.text = <span class="hljs-built_in">unescape</span>(item.text);
+          item.title = <span class="hljs-built_in">unescape</span>(item.title);
+          SniphubServices.tags.push(item.title);
+          item.tags = item.tags;
+        });
+      });
+  };
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{
-  app.get(<span class="hljs-string">'/:username'</span>, userController.userPage);
-  app.get(<span class="hljs-string">'/:username/download'</span>, userController.downloadSnippets);</pre></div></div>
+  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
+    $scope.searchText = tag.tagname;
+  };
+
+  $scope.forkSnippet = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> user, text, title, tabPrefix, scope, tag, forkedFrom </span>) </span>{</pre></div></div>
             
         </li>
         
@@ -210,15 +244,66 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>TODO: Get auth to work for the following two routes. For some reason
-express.session is regenerating sessionIDs on the get request. Super weird.
-Someone please fix.</p>
+              <p>calls the auth cookie parser to get the currently logged in username.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/:username/:snippetID'</span>, confirmUserSnippet, userController.getUserSnippet);
-  app.post(<span class="hljs-string">'/:username/:snippetID'</span>, confirmUserSnippet, userController.updateSnippet);
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    user = $scope.loggedInUser</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Only forks if the user is not the same as the forked from.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> ( user !== forkedFrom ) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>call the factory function with new user and forkedFrom data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      SniphubServices.addSnippet( user, text, title, tabPrefix, scope, tag, forkedFrom ).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"> response </span>) </span>{
+        $scope.fetchTopTen();
+      });
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>call once upon app load</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.$watch(<span class="hljs-string">'$viewContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $scope.getUsername();
+    $scope.fetchTopTen();
+    $scope.fetchTags();
+  });
+
+});</pre></div></div>
             
         </li>
         
