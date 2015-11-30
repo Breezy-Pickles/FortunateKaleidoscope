@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>ellipsis.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="authMiddleware.html">
+                  authMiddleware.js
+                </a>
+              
+                
+                <a class="source" href="middleware.html">
+                  middleware.js
+                </a>
+              
+                
+                <a class="source" href="passport.html">
+                  passport.js
+                </a>
+              
+                
+                <a class="source" href="apiController.html">
+                  apiController.js
+                </a>
+              
+                
+                <a class="source" href="authController.html">
+                  authController.js
+                </a>
+              
+                
+                <a class="source" href="publicController.html">
+                  publicController.js
+                </a>
+              
+                
+                <a class="source" href="userController.html">
+                  userController.js
+                </a>
+              
+                
+                <a class="source" href="dbconfig.html">
+                  dbconfig.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="helpers.html">
+                  helpers.js
+                </a>
+              
+                
+                <a class="source" href="promises.html">
+                  promises.js
+                </a>
+              
+                
+                <a class="source" href="secrets.html">
+                  secrets.js
+                </a>
+              
+                
+                <a class="source" href="sublimeSnippetGenerator.html">
+                  sublimeSnippetGenerator.js
+                </a>
+              
+                
+                <a class="source" href="utils.html">
+                  utils.js
+                </a>
+              
+                
+                <a class="source" href="apiRoute.html">
+                  apiRoute.js
+                </a>
+              
+                
+                <a class="source" href="authRoute.html">
+                  authRoute.js
+                </a>
+              
+                
+                <a class="source" href="publicRoute.html">
+                  publicRoute.js
+                </a>
+              
+                
+                <a class="source" href="userRoute.html">
+                  userRoute.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>ellipsis.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+ *  Angular directive to truncate multi-line text to visible height
+ *
+ *  @param bind (angular bound value to append) REQUIRED
+ *  @param ellipsisAppend (string) string to append at end of truncated text after ellipsis, can be HTML OPTIONAL
+ *  @param ellipsisAppendClick (function) function to call if ellipsisAppend is clicked (ellipsisAppend must be clicked) OPTIONAL
+ *  @param ellipsisSymbol (string) string to use as ellipsis, replaces default '...' OPTIONAL
+ *  @param ellipsisSeparator (string) separator to split string, replaces default ' ' OPTIONAL
+ *
+ *  @example &lt;p data-ellipsis data-ng-bind="boundData"&gt;&lt;/p&gt;
+ *  @example &lt;p data-ellipsis data-ng-bind="boundData" data-ellipsis-symbol="---"&gt;&lt;/p&gt;
+ *  @example &lt;p data-ellipsis data-ng-bind="boundData" data-ellipsis-append="read more"&gt;&lt;/p&gt;
+ *  @example &lt;p data-ellipsis data-ng-bind="boundData" data-ellipsis-append="read more" data-ellipsis-append-click="displayFull()"&gt;&lt;/p&gt;
+ *
+ */</span>
+angular.module(<span class="hljs-string">'sniphub.angular-ellipsis'</span>, [])
+
+.directive(<span class="hljs-string">'ellipsis'</span>, [<span class="hljs-string">'$timeout'</span>, <span class="hljs-string">'$window'</span>, <span class="hljs-string">'$sce'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$timeout, $window, $sce</span>) </span>{
+
+  <span class="hljs-keyword">var</span> AsyncDigest = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">delay</span>) </span>{
+    <span class="hljs-keyword">var</span> timeout = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">var</span> queue = [];
+
+    <span class="hljs-keyword">this</span>.remove = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fn</span>) </span>{
+      <span class="hljs-keyword">if</span> (queue.indexOf(fn) !== -<span class="hljs-number">1</span>) {
+        queue.splice(queue.indexOf(fn), <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">if</span> (queue.length === <span class="hljs-number">0</span>) {
+          $timeout.cancel(timeout);
+          timeout = <span class="hljs-literal">null</span>;
+        }
+      }
+    };
+    <span class="hljs-keyword">this</span>.add = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fn</span>) </span>{
+      <span class="hljs-keyword">if</span> (queue.indexOf(fn) === -<span class="hljs-number">1</span>) {
+        queue.push(fn);
+      }
+      <span class="hljs-keyword">if</span> (!timeout) {
+        timeout = $timeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          <span class="hljs-keyword">var</span> copy = queue.slice();
+          timeout = <span class="hljs-literal">null</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>reset scheduled array first in case one of the functions throws an error</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          queue.length = <span class="hljs-number">0</span>;
+          copy.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">fn</span>) </span>{
+            fn();
+          });
+        }, delay);
+      }
+    };
+  };
+
+  <span class="hljs-keyword">var</span> asyncDigestImmediate = <span class="hljs-keyword">new</span> AsyncDigest(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">var</span> asyncDigestDebounced = <span class="hljs-keyword">new</span> AsyncDigest(<span class="hljs-number">75</span>);
+
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    scope: {
+      ngBind: <span class="hljs-string">'='</span>,
+      ngBindHtml: <span class="hljs-string">'='</span>,
+      ellipsisAppend: <span class="hljs-string">'@'</span>,
+      ellipsisAppendClick: <span class="hljs-string">'&amp;'</span>,
+      ellipsisSymbol: <span class="hljs-string">'@'</span>,
+      ellipsisSeparator: <span class="hljs-string">'@'</span>,
+      useParent: <span class="hljs-string">"@"</span>,
+      ellipsisSeparatorReg: <span class="hljs-string">'='</span>
+    },
+    compile: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">elem, attr, linker</span>) </span>{
+
+      <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">scope, element, attributes</span>) </span>{
+        <span class="hljs-comment">/* Window Resize Variables */</span>
+        attributes.lastWindowResizeTime = <span class="hljs-number">0</span>;
+        attributes.lastWindowResizeWidth = <span class="hljs-number">0</span>;
+        attributes.lastWindowResizeHeight = <span class="hljs-number">0</span>;
+        attributes.lastWindowTimeoutEvent = <span class="hljs-literal">null</span>;
+        <span class="hljs-comment">/* State Variables */</span>
+        attributes.isTruncated = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getParentHeight</span>(<span class="hljs-params">element</span>) </span>{
+          <span class="hljs-keyword">var</span> heightOfChildren = <span class="hljs-number">0</span>;
+          angular.forEach(element.parent().children(), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">child</span>) </span>{
+            <span class="hljs-keyword">if</span> (child != element[<span class="hljs-number">0</span>]) {
+              heightOfChildren += child.clientHeight;
+            }
+          });
+          <span class="hljs-keyword">return</span> element.parent()[<span class="hljs-number">0</span>].clientHeight - heightOfChildren;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">buildEllipsis</span>(<span class="hljs-params"></span>) </span>{
+          <span class="hljs-keyword">var</span> binding = scope.ngBind || scope.ngBindHtml;
+          <span class="hljs-keyword">var</span> isTrustedHTML = <span class="hljs-literal">false</span>;
+          <span class="hljs-keyword">if</span>($sce.isEnabled() &amp;&amp; angular.isObject(binding) &amp;&amp; $sce.getTrustedHtml(binding)) {
+            isTrustedHTML = <span class="hljs-literal">true</span>;
+            binding = $sce.getTrustedHtml(binding);
+          }
+          <span class="hljs-keyword">if</span> (binding) {
+            <span class="hljs-keyword">var</span> isHtml = (!(!!scope.ngBind) &amp;&amp; !!(scope.ngBindHtml));
+            <span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>,
+              ellipsisSymbol = (<span class="hljs-keyword">typeof</span>(attributes.ellipsisSymbol) !== <span class="hljs-string">'undefined'</span>) ? attributes.ellipsisSymbol : <span class="hljs-string">'&amp;hellip;'</span>,
+              ellipsisSeparator = (<span class="hljs-keyword">typeof</span>(scope.ellipsisSeparator) !== <span class="hljs-string">'undefined'</span>) ? attributes.ellipsisSeparator : <span class="hljs-string">' '</span>,
+              ellipsisSeparatorReg = (<span class="hljs-keyword">typeof</span>(scope.ellipsisSeparatorReg) !== <span class="hljs-string">'undefined'</span>) ? scope.ellipsisSeparatorReg : <span class="hljs-literal">false</span>,
+              appendString = (<span class="hljs-keyword">typeof</span>(scope.ellipsisAppend) !== <span class="hljs-string">'undefined'</span> &amp;&amp; scope.ellipsisAppend !== <span class="hljs-string">''</span>) ? ellipsisSymbol + <span class="hljs-string">'&lt;span&gt;'</span> + scope.ellipsisAppend + <span class="hljs-string">'&lt;/span&gt;'</span> : ellipsisSymbol,
+              bindArray = ellipsisSeparatorReg ? binding.match(ellipsisSeparatorReg) : binding.split(ellipsisSeparator);
+
+            attributes.isTruncated = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">if</span> (isHtml) {
+              element.html(binding);
+            } <span class="hljs-keyword">else</span> {
+              element.text(binding);
+            }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>If text has overflow</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (isOverflowed(element, scope.useParent)) {
+              <span class="hljs-keyword">var</span> bindArrayStartingLength = bindArray.length,
+                initialMaxHeight = scope.useParent ? getParentHeight(element) : element[<span class="hljs-number">0</span>].clientHeight;
+
+              <span class="hljs-keyword">if</span> (isHtml) {
+                element.html(binding + appendString);
+              } <span class="hljs-keyword">else</span> {
+                element.text(binding).html(element.html() + appendString);
+              }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Set data-overflow on element for targeting</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              element.attr(<span class="hljs-string">'data-overflowed'</span>, <span class="hljs-string">'true'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Set complete text and remove one word at a time, until there is no overflow</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              <span class="hljs-keyword">for</span> (; i &lt; bindArrayStartingLength; i++) {
+                bindArray.pop();
+
+                <span class="hljs-keyword">if</span> (isHtml) {
+                  element.html(bindArray.join(ellipsisSeparator) + appendString);
+                } <span class="hljs-keyword">else</span> {
+                  element.text(bindArray.join(ellipsisSeparator)).html(element.html() + appendString);
+                }
+
+                <span class="hljs-keyword">if</span> ((scope.useParent ? element.parent()[<span class="hljs-number">0</span>] : element[<span class="hljs-number">0</span>]).scrollHeight &lt; initialMaxHeight || isOverflowed(element, scope.useParent) === <span class="hljs-literal">false</span>) {
+                  attributes.isTruncated = <span class="hljs-literal">true</span>;
+                  <span class="hljs-keyword">break</span>;
+                }
+              }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>If append string was passed and append click function included</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              <span class="hljs-keyword">if</span> (ellipsisSymbol != appendString &amp;&amp; <span class="hljs-keyword">typeof</span>(scope.ellipsisAppendClick) !== <span class="hljs-string">'undefined'</span> &amp;&amp; scope.ellipsisAppendClick !== <span class="hljs-string">''</span>) {
+                element.find(<span class="hljs-string">'span'</span>).bind(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+                  scope.$apply(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                    scope.ellipsisAppendClick.call(scope, {
+                      event: e
+                    });
+                  });
+                });
+              }
+
+              <span class="hljs-keyword">if</span>(!isTrustedHTML &amp;&amp; $sce.isEnabled())
+              {
+                $sce.trustAsHtml(binding);
+              }
+            }
+          }
+        }
+
+        <span class="hljs-comment">/**
+         *  Test if element has overflow of text beyond height or max-height
+         *
+         *  @param element (DOM object)
+         *
+         *  @return bool
+         *
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isOverflowed</span>(<span class="hljs-params">thisElement, useParent</span>) </span>{
+          thisElement = useParent ? thisElement.parent() : thisElement;
+          <span class="hljs-keyword">return</span> thisElement[<span class="hljs-number">0</span>].scrollHeight &gt; thisElement[<span class="hljs-number">0</span>].clientHeight;
+        }
+
+        <span class="hljs-comment">/**
+         *  Watchers
+         */</span>
+
+        <span class="hljs-comment">/**
+         *  Execute ellipsis truncate on ngBind update
+         */</span>
+        scope.$watch(<span class="hljs-string">'ngBind'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          asyncDigestImmediate.add(buildEllipsis);
+        });
+
+        <span class="hljs-comment">/**
+         *  Execute ellipsis truncate on ngBindHtml update
+         */</span>
+        scope.$watch(<span class="hljs-string">'ngBindHtml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          asyncDigestImmediate.add(buildEllipsis);
+        });
+
+        <span class="hljs-comment">/**
+         *  Execute ellipsis truncate on ngBind update
+         */</span>
+        scope.$watch(<span class="hljs-string">'ellipsisAppend'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          buildEllipsis();
+        });
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkWindowForRebuild</span>(<span class="hljs-params"></span>) </span>{
+          <span class="hljs-keyword">if</span> (attributes.lastWindowResizeWidth != <span class="hljs-built_in">window</span>.innerWidth || attributes.lastWindowResizeHeight != <span class="hljs-built_in">window</span>.innerHeight) {
+            buildEllipsis();
+          }
+
+          attributes.lastWindowResizeWidth = <span class="hljs-built_in">window</span>.innerWidth;
+          attributes.lastWindowResizeHeight = <span class="hljs-built_in">window</span>.innerHeight;
+        }
+
+        <span class="hljs-comment">/**
+         *  When window width or height changes - re-init truncation
+         */</span>
+
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onResize</span>(<span class="hljs-params"></span>) </span>{
+          asyncDigestDebounced.add(checkWindowForRebuild);
+        }
+
+        <span class="hljs-keyword">var</span> $win = angular.element($<span class="hljs-built_in">window</span>);
+        $win.bind(<span class="hljs-string">'resize'</span>, onResize);
+
+        <span class="hljs-comment">/**
+         * Clean up after ourselves
+         */</span>
+        scope.$on(<span class="hljs-string">'$destroy'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          $win.unbind(<span class="hljs-string">'resize'</span>, onResize);
+          asyncDigestImmediate.remove(buildEllipsis);
+          asyncDigestDebounced.remove(checkWindowForRebuild);
+        });
+
+
+      };
+    }
+  };
+}]);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

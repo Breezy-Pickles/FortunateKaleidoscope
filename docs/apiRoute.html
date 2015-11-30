@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -160,8 +200,9 @@
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{
   app.get(<span class="hljs-string">'/topten'</span>, apiController.getTopTen);
+  app.get(<span class="hljs-string">'/tags'</span>, apiController.getTags);
   app.post(<span class="hljs-string">'/search'</span>, apiController.searchSnips);
-  app.post(<span class="hljs-string">'/snippet'</span>, authMiddleware, apiController.writeSnippet)
+  app.post(<span class="hljs-string">'/snippet'</span>, authMiddleware, apiController.writeSnippet);
   app.use(<span class="hljs-string">'/user'</span>, userRoute);
   <span class="hljs-built_in">require</span>(<span class="hljs-string">'./userRoute'</span>)(userRoute);
 };</pre></div></div>

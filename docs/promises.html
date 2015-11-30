@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -262,11 +302,10 @@ passes out the filePath for zip when done.</p>
             <div class="content"><div class='highlight'><pre>      zipArchiver.bulk([
         { src: [ <span class="hljs-string">'**/*'</span> ], cwd: srcPath, expand: <span class="hljs-literal">true</span> }
       ]);
-      zipArchiver.finalize(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, bytes</span>) </span>{
-        <span class="hljs-keyword">if</span>(err) {
+      zipArchiver.finalize(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-keyword">if</span> (err) {
           reject(err);
         }
-        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'done:'</span>, base, bytes);
       });
     });
   });
@@ -278,7 +317,7 @@ passes out the filePath for zip when done.</p>
   zipFolder: zipFolder,
   mkpathAsync: mkpathAsync
 
-}</pre></div></div>
+};</pre></div></div>
             
         </li>
         

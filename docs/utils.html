@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -161,12 +201,12 @@ returned as a promise.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> writeSnippetFile = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snipObj, outFolder</span>) </span>{
-  <span class="hljs-keyword">var</span> fileName = <span class="hljs-built_in">escape</span>(snipObj.title) + <span class="hljs-string">".sublime-snippet"</span>;
+  <span class="hljs-keyword">var</span> fileName = <span class="hljs-built_in">escape</span>(snipObj.title) + <span class="hljs-string">'.sublime-snippet'</span>;
   <span class="hljs-keyword">var</span> filePath = outFolder + fileName;
-  <span class="hljs-keyword">return</span> mkpathAsync(outFolder).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">return</span> mkpathAsync(outFolder).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">return</span> writeFile(filePath,
       sublimeSnippetTemplate(snipObj),
-      <span class="hljs-string">'utf8'</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+      <span class="hljs-string">'utf8'</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">return</span> {filePath: filePath, fileName: fileName};
       });
   });

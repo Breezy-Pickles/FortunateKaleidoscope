@@ -107,6 +107,23 @@ describe("Integration of tables", function () {
     });
   });
 
+  it("Should have tags associated with snippets in snippet_tag table", function (done) {
+    db.Tag.create({tagname: "Testing"})
+    .then( function (tag) {
+      db.Snippet.create({text: "awesome text snippets", forkedCount: 1})
+      .then(function (snippet) {
+        snippet.addTags(tag)
+        .then(function () {
+          db.Snippet.findOne({}, include:[{model:Tag}]})
+          .then(function (snippet){
+            expect(snippet.forkedCount).to.equal(1);
+            done();
+          })
+        })
+      })
+    })
+  })
+
   it("Should correctly link associations across tables", function (done) {
     var post = {
       text: "test",

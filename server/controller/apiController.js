@@ -29,8 +29,10 @@ module.exports = {
   },
   writeSnippet: function (req, res) {
     var tags = req.body.tags;
+    // create tag instances in database
     helpers.addTags(tags)
     .then (function (tags) {
+      // pass array of tags to create associations between newly created snippet and tags
       helpers.writeSnippet(tags, req, function() {
         res.json({created:true});
       })

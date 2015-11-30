@@ -17,6 +17,7 @@ $scope.fetchByUser = function ( user ) {
         });
       });
   };
+  // filter current snippets by tags
   $scope.filter = function (tag) {
     $scope.searchText = tag.tagname;
   };

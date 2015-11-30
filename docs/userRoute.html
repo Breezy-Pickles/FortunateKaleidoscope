@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -159,9 +199,25 @@
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{
   app.get(<span class="hljs-string">'/:username'</span>, userController.userPage);
-  app.get(<span class="hljs-string">'/:username/download'</span>, userController.downloadSnippets);
-  app.get(<span class="hljs-string">'/:username/:snippetID'</span>, confirmUserSnippet, userController.getUserSnippet);
-  app.post(<span class="hljs-string">'/:username/:snippetID'</span>, authMiddleware, confirmUserSnippet, userController.updateSnippet);
+  app.get(<span class="hljs-string">'/:username/download'</span>, userController.downloadSnippets);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>TODO: Get auth to work for the following two routes. For some reason
+express.session is regenerating sessionIDs on the get request. Super weird.
+Someone please fix.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/:username/:snippetID'</span>, confirmUserSnippet, userController.getUserSnippet);
+  app.post(<span class="hljs-string">'/:username/:snippetID'</span>, confirmUserSnippet, userController.updateSnippet);
 };</pre></div></div>
             
         </li>

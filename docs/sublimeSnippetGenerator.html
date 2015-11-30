@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -138,12 +178,25 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This is builds the structure of the snippet for download</p>
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snipObj</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snipObj</span>) </span>{
   <span class="hljs-keyword">var</span> snippet = <span class="hljs-built_in">unescape</span>(snipObj.text);
   <span class="hljs-keyword">var</span> tabPrefix = <span class="hljs-built_in">unescape</span>(snipObj.tabPrefix);
-  <span class="hljs-keyword">var</span> scope = snipObj.scope !== <span class="hljs-literal">undefined</span> ?  <span class="hljs-string">"&lt;scope&gt;scope."</span> + snipObj.scope + <span class="hljs-string">"&lt;/scope&gt;"</span> : <span class="hljs-string">''</span>;
+  <span class="hljs-keyword">var</span> scope = snipObj.scope !== <span class="hljs-literal">undefined</span> ?  <span class="hljs-string">"&lt;scope&gt;"</span> + snipObj.scope + <span class="hljs-string">"&lt;/scope&gt;"</span> : <span class="hljs-string">''</span>;
   <span class="hljs-keyword">return</span> <span class="hljs-string">"&lt;snippet&gt;\n"</span> +
     <span class="hljs-string">"&lt;content&gt;&lt;![CDATA[\n"</span>+
     snippet +

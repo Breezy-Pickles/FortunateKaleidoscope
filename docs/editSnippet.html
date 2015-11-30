@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>secrets.js</title>
+  <title>editSnippet.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -163,7 +163,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>secrets.js</h1>
+                  <h1>editSnippet.js</h1>
               </div>
           </li>
         
@@ -178,13 +178,113 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
-<span class="hljs-built_in">module</span>.exports = {
-  sql: <span class="hljs-string">'1234'</span>,
-  GITHUB_CLIENT_ID: <span class="hljs-string">'035afbf56400a0da13a8'</span>,
-  GITHUB_CLIENT_SECRET: <span class="hljs-string">'6ba93730762e55055cb73bc1c7c9d91f12427662'</span>,
-  SESSION_SECRET: <span class="hljs-string">'asda2313sgnfjbkjb2k34bhkqtbjvljcvj;&amp;*(*%$#@#$%UTFVGJ(*^R&amp;%E^$%WTD))'</span>
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>angular.module(<span class="hljs-string">'sniphub.editSnippet'</span>, [])
+
+.controller(<span class="hljs-string">'EditSnippetController'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Auth, $scope, $state, $stateParams, $location, SniphubServices</span>) </span>{
+  
+  $scope.params = $stateParams;
+
+  $scope.fetchSnippetById = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user, id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>fetch the snippet by provided snippet id;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    SniphubServices.fetchBySnippetId( user, id ).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snippet</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Populates input fields with data from snippet</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      $scope.snippet = snippet.data;
+      <span class="hljs-keyword">var</span> tags = <span class="hljs-string">""</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>transforms the tags oject from the snippet into a string to be processed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;snippet.data.tags.length; i++) {
+          tags = tags + snippet.data.tags[i].tagname;
+        <span class="hljs-keyword">if</span>(i &lt; snippet.data.tags.length-<span class="hljs-number">1</span>){
+          tags = tags +<span class="hljs-string">', '</span>;
+        }
+      }
+      $scope.inputEntry = <span class="hljs-built_in">unescape</span>($scope.snippet.text);
+      $scope.titleField = $scope.snippet.title;
+      $scope.tabField = $scope.snippet.tabPrefix;
+      $scope.scope = $scope.snippet.scope;
+      $scope.userField = Auth.isAuth(<span class="hljs-string">'username'</span>);
+      $scope.snippetId = $scope.snippet.id;
+      $scope.tagField = tags;
+    });
+  };
+
+  $scope.updateSnippet = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snippetId, user, text, title, tabPrefix, scope, tag</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>regex expression that removes spaces between tags</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> tag = tag.replace(<span class="hljs-regexp">/,\s+/g</span>, <span class="hljs-string">','</span>).replace(<span class="hljs-regexp">/\s+,/g</span>, <span class="hljs-string">''</span>);
+    SniphubServices.updateSnippet(snippetId, user, text, title, tabPrefix, scope, tag).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>changes state on completion</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      $state.go(<span class="hljs-string">'snippets'</span>);
+    });
+  };
+
+  $scope.$watch(<span class="hljs-string">'$viewContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $scope.fetchSnippetById($scope.params.id, $scope.params.snippetId);
+  });
+});</pre></div></div>
             
         </li>
         

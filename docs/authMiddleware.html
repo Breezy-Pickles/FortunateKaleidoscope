@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -155,8 +195,6 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>exports.authMiddleware = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(req.session);
-  <span class="hljs-built_in">console</span>.log(req.isAuthenticated());
   <span class="hljs-keyword">if</span> (req.isAuthenticated()) { <span class="hljs-keyword">return</span> next(); }
   res.redirect(<span class="hljs-string">'/'</span>);
 };</pre></div></div>

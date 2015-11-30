@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -144,7 +184,6 @@
 <span class="hljs-keyword">var</span> <span class="hljs-built_in">Promise</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bluebird'</span>);
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/helpers'</span>);
 <span class="hljs-keyword">var</span> utils = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/utils'</span>);
-<span class="hljs-keyword">var</span> dummyData = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../test/dummyData'</span>);
 
 <span class="hljs-built_in">module</span>.exports = {
   userPage: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
@@ -162,14 +201,8 @@
   },
   updateSnippet: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
     req.body.id = req.params.snippetID;
-    helpers.updateSnippet(req).then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
-      res.json(result);
-    }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
-      <span class="hljs-built_in">console</span>.log(err);
-      res.redirect(<span class="hljs-string">'/'</span>);
-    });
-  },
-  downloadSnippets: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{</pre></div></div>
+    <span class="hljs-keyword">var</span> tags = req.body.tags;
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"getting into update snippet with these tags"</span>, tags)</pre></div></div>
             
         </li>
         
@@ -180,14 +213,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Get username</p>
+              <p>add any new tags from updated snippet</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> username = req.params.username;
-    <span class="hljs-built_in">console</span>.log(username);
-    <span class="hljs-keyword">var</span> folder = rootFolder + <span class="hljs-string">'/server/tmp/'</span> + <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'/'</span>;
-    <span class="hljs-keyword">var</span> zipFolder = rootFolder + <span class="hljs-string">'/server/zip/'</span> + <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'/'</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    helpers.addTags(tags)
+    .then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tags</span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'getting past creating the tags'</span>, tags);</pre></div></div>
             
         </li>
         
@@ -198,11 +230,19 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>getSnippetsByUser -&gt;</p>
+              <p>pass in new tags to create association between edited snippet and tags</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    helpers.getSnippetsByUser(username, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, results</span>) </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      helpers.updateSnippet(tags, req).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
+        res.json(result);
+      }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(err);
+        res.redirect(<span class="hljs-string">'/'</span>);
+      });
+    })
+  },
+  downloadSnippets: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -212,6 +252,38 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Get username</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> username = req.params.username;
+    <span class="hljs-keyword">var</span> folder = rootFolder + <span class="hljs-string">'/server/tmp/'</span> + <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'/'</span>;
+    <span class="hljs-keyword">var</span> zipFolder = rootFolder + <span class="hljs-string">'/server/zip/'</span> + <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'/'</span>;q</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>getSnippetsByUser -&gt;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    helpers.getSnippetsByUser(username, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, results</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>convert each to json</p>
 
@@ -224,11 +296,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>writeSnippet array of promises</p>
 
@@ -242,11 +314,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Map over snippets then</p>
 
@@ -258,11 +330,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>when done, zip up folder</p>
 
@@ -273,26 +345,26 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>res download that bitch</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          res.download(zipFile, <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'.zip'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>          res.download(zipFile, <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'.zip'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-9">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>on complete, delete the folder.</p>
 
@@ -301,7 +373,7 @@
             <div class="content"><div class='highlight'><pre>            utils.cleanFolder(folder);
             utils.cleanFolder(zipFolder);
           });
-        })
+        });
       }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
         res.sendStatus(<span class="hljs-number">501</span>, err);
       });

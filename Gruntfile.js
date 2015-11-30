@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     },
     docco: {
       debug: {
-        src: ['client/*.js', 'server/**/*.js'],
+        src: ['client/js/*.js', 'server/**/*.js'],
         options: {
           output: 'docs/'
         }
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('doccify', ['docco']);
   grunt.registerTask('run', ['nodemon']);
-  grunt.registerTask('test', ['jshint', 'mochaTest']);
+  grunt.registerTask('test', ['mochaTest']);
 
 
 };

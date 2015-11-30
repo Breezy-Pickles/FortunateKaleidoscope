@@ -1,10 +1,9 @@
-// FIX ALL THIS
 angular.module('sniphub.snippets', ['hljs'])
 
 .controller('SnippetsController', function (Auth, $scope, $state, SniphubServices) {
   $scope.snippets = [];
 
-
+  // query database for all tags and hold in local memory to be used for search and filtering
   $scope.fetchTags = function () {
     SniphubServices.fetchTags().then( function (response) {
       for(var i=0; i<response.data.length; i++){
@@ -16,10 +15,12 @@ angular.module('sniphub.snippets', ['hljs'])
     $scope.tags = SniphubServices.tags;
   };
   
+  // get username of current user 
   $scope.getUsername = function () {
     $scope.loggedInUser = Auth.isAuth('username');
   };
 
+  // query database for all snippets
   $scope.fetchTopTen = function () {
     //call factory function
     SniphubServices.tags = [];
@@ -36,6 +37,7 @@ angular.module('sniphub.snippets', ['hljs'])
       });
   };
 
+  // filter the snippets by tagname in the searchbox 
   $scope.filter = function (tag) {
     $scope.searchText = tag.tagname;
   };

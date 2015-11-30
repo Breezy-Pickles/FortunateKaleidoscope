@@ -34,6 +34,7 @@ angular.module('sniphub', ['ngRoute','ngMaterial', 'ngAnimate', 'ngAria','ui.rou
     });
 
 })
+// factory that allows users to change the theme of their sniphub account 
 .factory('colorTheme', function () {
   return {
     elements: {
@@ -52,6 +53,7 @@ angular.module('sniphub', ['ngRoute','ngMaterial', 'ngAnimate', 'ngAria','ui.rou
     } 
   };
 })
+// controller for handling theme change requests from
 .controller('MainCtrl', ['$scope', 'colorTheme', function ($scope, colorTheme) {
   $scope.theme = colorTheme.theme;
   $scope.changeTheme = colorTheme.changeTheme.bind(colorTheme);

@@ -20,6 +20,46 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="addSnippet.html">
+                  addSnippet.js
+                </a>
+              
+                
+                <a class="source" href="app.html">
+                  app.js
+                </a>
+              
+                
+                <a class="source" href="auth.html">
+                  auth.js
+                </a>
+              
+                
+                <a class="source" href="editSnippet.html">
+                  editSnippet.js
+                </a>
+              
+                
+                <a class="source" href="ellipsis.html">
+                  ellipsis.js
+                </a>
+              
+                
+                <a class="source" href="services.html">
+                  services.js
+                </a>
+              
+                
+                <a class="source" href="snippetUser.html">
+                  snippetUser.js
+                </a>
+              
+                
+                <a class="source" href="snippets.html">
+                  snippets.js
+                </a>
+              
+                
                 <a class="source" href="app.html">
                   app.js
                 </a>
@@ -159,7 +199,7 @@
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
   <span class="hljs-keyword">var</span> GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   <span class="hljs-keyword">var</span> GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-  <span class="hljs-keyword">var</span> CALLBACK_URL = <span class="hljs-string">'https://safe-depths-6699.herokuapp.com/auth/github/callback'</span>
+  <span class="hljs-keyword">var</span> CALLBACK_URL = <span class="hljs-string">'https://sniphub.herokuapp.com/auth/github/callback'</span>;
 } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
@@ -177,7 +217,7 @@
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> GITHUB_CLIENT_ID = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/secrets'</span>).GITHUB_CLIENT_ID;
   <span class="hljs-keyword">var</span> GITHUB_CLIENT_SECRET = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/secrets'</span>).GITHUB_CLIENT_SECRET;
-  <span class="hljs-keyword">var</span> CALLBACK_URL = <span class="hljs-string">"http://localhost:3000/auth/github/callback"</span>;
+  <span class="hljs-keyword">var</span> CALLBACK_URL = <span class="hljs-string">'http://localhost:8000/auth/github/callback'</span>;
 }</pre></div></div>
             
         </li>
@@ -209,8 +249,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>passport.serializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user, done</span>) </span>{
-  done(<span class="hljs-literal">null</span>, user.dataValues.username);
+            <div class="content"><div class='highlight'><pre>passport.serializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user, done</span>) </span>{
+  done(<span class="hljs-literal">null</span>, user);
 });</pre></div></div>
             
         </li>
@@ -228,12 +268,8 @@ reinit session</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>passport.deserializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username, done</span>) </span>{
-  findUserByUsername(username).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
-    done(<span class="hljs-literal">null</span>, user);
-  }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
-    done(err);
-  });
+            <div class="content"><div class='highlight'><pre>passport.deserializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">obj, done</span>) </span>{
+  done(<span class="hljs-literal">null</span>, obj);
 });
 
 passport.use(<span class="hljs-keyword">new</span> GitHubStrategy({
@@ -241,7 +277,7 @@ passport.use(<span class="hljs-keyword">new</span> GitHubStrategy({
     clientSecret: GITHUB_CLIENT_SECRET,
     callbackURL: CALLBACK_URL
   },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">accessToken, refreshToken, profile, done</span>) </span>{</pre></div></div>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">accessToken, refreshToken, profile, done</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -271,9 +307,9 @@ passport.use(<span class="hljs-keyword">new</span> GitHubStrategy({
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      findOrCreateUser(profile).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+            <div class="content"><div class='highlight'><pre>      findOrCreateUser(profile).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
         done(<span class="hljs-literal">null</span>, user);
-      }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+      }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
         <span class="hljs-built_in">console</span>.log(err);
       });
     });
