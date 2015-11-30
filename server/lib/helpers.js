@@ -33,7 +33,7 @@ module.exports = {
       });
     });
   },
-
+  // create all associated tag instances in tag table and return in an array
   addTags: function (tags, res) {
     var tags = tags.split(',');
 
@@ -51,7 +51,6 @@ module.exports = {
 
     return Promise.map(tags, createTag)
     .then ( function (tags) {
-      // tags = tags.dataValues;
       return tags;
     })
 
@@ -66,9 +65,7 @@ module.exports = {
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var forkedFrom = req.body.forkedFrom;
-    // tags = tags.map(function (tag) {
-    //    return {tagname: tag};
-    // });
+
 
     // Building snippet object to create
     var post = {
@@ -90,6 +87,7 @@ module.exports = {
     }).then(function (result) {
       post.userId = result[0].id;
       Snippet.create(post)
+      // populates a join table linking snippet with associated tags
       .then(function (post) {
         post.addTags(tags);
         cb();
@@ -97,6 +95,7 @@ module.exports = {
     }).catch(cb);
   },
 
+  //returns all tags in the tag table 
   getTags: function () {
     return Tag.findAll({}).then(function (result) {
       return result;
@@ -137,6 +136,7 @@ module.exports = {
         id: req.body.id
       }
     }).then(function (result) {
+      // add any additional tags to the snippet
       return Snippet.find({
         where: {
           id: req.body.id

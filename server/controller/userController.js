@@ -23,9 +23,11 @@ module.exports = {
     req.body.id = req.params.snippetID;
     var tags = req.body.tags;
     console.log("getting into update snippet with these tags", tags)
+    // add any new tags from updated snippet
     helpers.addTags(tags)
     .then( function (tags) {
       console.log('getting past creating the tags', tags);
+      // pass in new tags to create association between edited snippet and tags
       helpers.updateSnippet(tags, req).then(function (result) {
         res.json(result);
       }).catch(function (err) {
