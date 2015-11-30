@@ -215,14 +215,27 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>      $scope.snippet = snippet.data;
-      <span class="hljs-keyword">var</span> tags = <span class="hljs-string">""</span>;
-      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;snippet.data.tags.length; i++) {
+      <span class="hljs-keyword">var</span> tags = <span class="hljs-string">""</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>transforms the tags oject from the snippet into a string to be processed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;snippet.data.tags.length; i++) {
           tags = tags + snippet.data.tags[i].tagname;
         <span class="hljs-keyword">if</span>(i &lt; snippet.data.tags.length-<span class="hljs-number">1</span>){
           tags = tags +<span class="hljs-string">', '</span>;
         }
       }
-      <span class="hljs-built_in">console</span>.log(tags);
       $scope.inputEntry = <span class="hljs-built_in">unescape</span>($scope.snippet.text);
       $scope.titleField = $scope.snippet.title;
       $scope.tabField = $scope.snippet.tabPrefix;
@@ -233,18 +246,32 @@
     });
   };
 
-  $scope.updateSnippet = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snippetId, user, text, title, tabPrefix, scope, tag</span>) </span>{
-    <span class="hljs-keyword">var</span> tag = tag.replace(<span class="hljs-regexp">/,\s+/g</span>, <span class="hljs-string">','</span>).replace(<span class="hljs-regexp">/\s+,/g</span>, <span class="hljs-string">''</span>);
+  $scope.updateSnippet = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snippetId, user, text, title, tabPrefix, scope, tag</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>regex expression that removes spaces between tags</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> tag = tag.replace(<span class="hljs-regexp">/,\s+/g</span>, <span class="hljs-string">','</span>).replace(<span class="hljs-regexp">/\s+,/g</span>, <span class="hljs-string">''</span>);
     SniphubServices.updateSnippet(snippetId, user, text, title, tabPrefix, scope, tag).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-4">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>changes state on completion</p>
 

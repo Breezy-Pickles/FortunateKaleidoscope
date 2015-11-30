@@ -175,32 +175,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <p>FIX ALL THIS</p>
-
+              
             </div>
             
             <div class="content"><div class='highlight'><pre>angular.module(<span class="hljs-string">'sniphub.snippets'</span>, [<span class="hljs-string">'hljs'</span>])
 
 .controller(<span class="hljs-string">'SnippetsController'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">Auth, $scope, $state, SniphubServices</span>) </span>{
-  $scope.snippets = [];
-
-
-  $scope.fetchTags = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    SniphubServices.fetchTags().then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
-      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;response.data.length; i++){
-        <span class="hljs-keyword">if</span>(SniphubServices.tags.indexOf(response.data[i]) === -<span class="hljs-number">1</span>){
-          SniphubServices.tags.push(response.data[i]);
-        }
-      }
-    });
-    $scope.tags = SniphubServices.tags;
-  };
-  
-  $scope.getUsername = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-    $scope.loggedInUser = Auth.isAuth(<span class="hljs-string">'username'</span>);
-  };
-
-  $scope.fetchTopTen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
+  $scope.snippets = [];</pre></div></div>
             
         </li>
         
@@ -210,6 +191,62 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>query database for all tags and hold in local memory to be used for search and filtering</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.fetchTags = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    SniphubServices.fetchTags().then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;response.data.length; i++){
+        <span class="hljs-keyword">if</span>(SniphubServices.tags.indexOf(response.data[i]) === -<span class="hljs-number">1</span>){
+          SniphubServices.tags.push(response.data[i]);
+        }
+      }
+    });
+    $scope.tags = SniphubServices.tags;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>get username of current user </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.getUsername = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    $scope.loggedInUser = Auth.isAuth(<span class="hljs-string">'username'</span>);
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>query database for all snippets</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.fetchTopTen = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>call factory function</p>
 
@@ -227,9 +264,22 @@
           item.tags = item.tags;
         });
       });
-  };
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>filter the snippets by tagname in the searchbox </p>
 
-  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
     $scope.searchText = tag.tagname;
   };
 
@@ -238,11 +288,11 @@
         </li>
         
         
-        <li id="section-3">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>calls the auth cookie parser to get the currently logged in username.</p>
 
@@ -253,11 +303,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Only forks if the user is not the same as the forked from.</p>
 
@@ -268,11 +318,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>call the factory function with new user and forkedFrom data</p>
 
@@ -287,11 +337,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>call once upon app load</p>
 

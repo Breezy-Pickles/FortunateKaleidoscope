@@ -209,8 +209,22 @@ $scope.fetchByUser = <span class="hljs-function"><span class="hljs-keyword">func
           item.title = <span class="hljs-built_in">unescape</span>(item.title);
         });
       });
-  };
-  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>filter current snippets by tags</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $scope.filter = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
     $scope.searchText = tag.tagname;
   };
 
