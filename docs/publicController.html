@@ -175,21 +175,21 @@ when it finds the Snippet, it writes it to file, then sends it out as a download
     <span class="hljs-keyword">var</span> snippetID = req.params.snippetId;
     <span class="hljs-keyword">var</span> folder = rootFolder + <span class="hljs-string">'/server/tmp/'</span> + <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'/'</span>;
     helpers.getSnippet(snippetID)
-           .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
-             utils.writeSnippetFile(result[<span class="hljs-number">0</span>].toJSON(), folder).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>)</span>{
-               res.download(file.filePath, file.fileName, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
-                 <span class="hljs-keyword">if</span> (err) {
-                   <span class="hljs-built_in">console</span>.log(res.headersSent);
-                 }
-                 utils.cleanFolder(folder);
-               });
-             })
+            .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
+              utils.writeSnippetFile(result.toJSON(), folder).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">file</span>) </span>{
+                res.download(file.filePath, file.fileName, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+                <span class="hljs-keyword">if</span> (err) {
+                  <span class="hljs-built_in">console</span>.log(res.headersSent);
+                }
+                utils.cleanFolder(folder);
+              });
+            });
            })
-           .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
-             res.redirect(<span class="hljs-string">'/'</span>);
-           });
+          .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+           res.redirect(<span class="hljs-string">'/'</span>);
+          });
   }
-}</pre></div></div>
+};</pre></div></div>
             
         </li>
         

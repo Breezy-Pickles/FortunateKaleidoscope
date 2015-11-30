@@ -143,6 +143,15 @@
 <span class="hljs-keyword">var</span> helpers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/helpers'</span>);
 
 <span class="hljs-built_in">module</span>.exports = {
+  getTags: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
+    helpers.getTags().then( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tags</span>) </span>{
+      <span class="hljs-keyword">var</span> resTags = tags.map( <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tag</span>) </span>{
+        <span class="hljs-keyword">return</span> tag.tagname;
+      });
+      res.send(resTags);
+    });
+  },
+  
   getTopTen: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
     helpers.getSnippetsMostRecent().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snips</span>) </span>{
       <span class="hljs-keyword">var</span> resSnips = snips.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">snip</span>) </span>{
@@ -164,17 +173,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>TODO: Search snips by tag</p>
+              <p>TODO: Search snips by tag
+helpers.searchSnippets()</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    res.json(dummyData);
   },
   writeSnippet: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{
-    helpers.writeSnippet(req, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">post</span>) </span>{
-        res.json({created: <span class="hljs-literal">true</span>});
-    });
+    <span class="hljs-keyword">var</span> tags = req.body.tags;
+    helpers.addTags(tags)
+    .then (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tags</span>) </span>{
+      helpers.writeSnippet(tags, req, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        res.json({created:<span class="hljs-literal">true</span>});
+      })
+    })
   }
+
 };</pre></div></div>
             
         </li>

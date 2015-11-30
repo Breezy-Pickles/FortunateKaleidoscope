@@ -160,8 +160,9 @@
 
 <span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app</span>) </span>{
   app.get(<span class="hljs-string">'/topten'</span>, apiController.getTopTen);
+  app.get(<span class="hljs-string">'/tags'</span>, apiController.getTags);
   app.post(<span class="hljs-string">'/search'</span>, apiController.searchSnips);
-  app.post(<span class="hljs-string">'/snippet'</span>, authMiddleware, apiController.writeSnippet)
+  app.post(<span class="hljs-string">'/snippet'</span>, authMiddleware, apiController.writeSnippet);
   app.use(<span class="hljs-string">'/user'</span>, userRoute);
   <span class="hljs-built_in">require</span>(<span class="hljs-string">'./userRoute'</span>)(userRoute);
 };</pre></div></div>

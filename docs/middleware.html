@@ -151,10 +151,7 @@
   <span class="hljs-keyword">var</span> SESSION_SECRET = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/secrets'</span>).SESSION_SECRET;
 }
 
-<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app, express</span>) </span>{
-  <span class="hljs-keyword">var</span> authRoute = express.Router();
-  <span class="hljs-keyword">var</span> publicRoute = express.Router();
-  <span class="hljs-keyword">var</span> apiRoute = express.Router();</pre></div></div>
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">app, express</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -196,15 +193,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Uses sessions</p>
+              <p>Uses cookies for client side to use</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(session({
-    secret: SESSION_SECRET,
-    resave: <span class="hljs-literal">true</span>,
-    saveUninitialized: <span class="hljs-literal">false</span>
-  }));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.use(cookieParser());</pre></div></div>
             
         </li>
         
@@ -215,11 +208,15 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>Uses cookies for client side to use</p>
+              <p>Establish static route</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(cookieParser());</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
+    app.use(express.static(process.cwd() + <span class="hljs-string">'/client'</span>));
+  } <span class="hljs-keyword">else</span> {
+    app.use(express.static(__dirname + <span class="hljs-string">'/../../client'</span>));
+  }</pre></div></div>
             
         </li>
         
@@ -229,6 +226,28 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Uses sessions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.use(session({
+    secret: SESSION_SECRET,
+    resave: <span class="hljs-literal">false</span>,
+    saveUninitialized: <span class="hljs-literal">false</span>,
+    sessionid: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req</span>) </span>{
+      <span class="hljs-keyword">return</span> req.cookie.username;
+    }
+  }));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Inits passport sessions</p>
 
@@ -240,44 +259,26 @@
         </li>
         
         
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Establish static route</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"current working dir "</span> +process.cwd());
-    app.use(express.static(process.cwd() + <span class="hljs-string">'/client'</span>));
-  } <span class="hljs-keyword">else</span> {
-    app.use(express.static(__dirname + <span class="hljs-string">'/../../client'</span>));
-  }
-
-  app.use(<span class="hljs-string">'/'</span>, publicRoute);
-  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/publicRoute'</span>)(publicRoute);
-
-  app.use(<span class="hljs-string">'/auth'</span>, authRoute);
-  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/authRoute'</span>)(authRoute);</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>app.use(‘/user’, userRoute);
-require(‘./routes/userRoute’)(userRoute);</p>
+              <p>Set up routes</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> authRoute = express.Router();
+  <span class="hljs-keyword">var</span> publicRoute = express.Router();
+  <span class="hljs-keyword">var</span> apiRoute = express.Router();
+
+  app.use(<span class="hljs-string">'/'</span>, publicRoute);
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/publicRoute'</span>)(publicRoute);
+
+  app.use(<span class="hljs-string">'/auth'</span>, authRoute);
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/authRoute'</span>)(authRoute);
+
   app.use(<span class="hljs-string">'/api'</span>, apiRoute);
   <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/apiRoute'</span>)(apiRoute);
 

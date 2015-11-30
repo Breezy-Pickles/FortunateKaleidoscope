@@ -164,7 +164,6 @@ object with the key ‘sql’ and your password as the value</p>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Sequelize = <span class="hljs-built_in">require</span>(<span class="hljs-string">'sequelize'</span>);
 <span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
-  <span class="hljs-built_in">console</span>.log(process.env.CLEARDB_DATABASE_URL);
   <span class="hljs-keyword">var</span> sequelize = <span class="hljs-keyword">new</span> Sequelize(process.env.CLEARDB_DATABASE_URL);
 } <span class="hljs-keyword">else</span> {
   <span class="hljs-keyword">var</span> secret = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../lib/secrets'</span>).sql;
@@ -197,15 +196,29 @@ object with the key ‘sql’ and your password as the value</p>
 });
 
 <span class="hljs-keyword">var</span> Snippet = sequelize.define(<span class="hljs-string">'snippets'</span>, {
-  text : Sequelize.STRING,
+  text : Sequelize.STRING(<span class="hljs-number">2000</span>),
   forkedCount : Sequelize.INTEGER,
   tabPrefix : Sequelize.STRING,
   title : Sequelize.STRING,
   scope : Sequelize.STRING,
-  forkedFrom : Sequelize.STRING
-});
+  forkedFrom : Sequelize.STRING, 
+  upvote: Sequelize.INTEGER
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>TODO: Tag tables are inserted for later addition of tags</p>
 
-<span class="hljs-keyword">var</span> Tag = sequelize.define(<span class="hljs-string">'tags'</span>, {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> Tag = sequelize.define(<span class="hljs-string">'tags'</span>, {
   tagname: {
     type: Sequelize.STRING,
     unique: <span class="hljs-literal">true</span>
@@ -223,39 +236,39 @@ sequelize
         </li>
         
         
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Creates one to many relationship between User and Snippets table</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>Snippet.belongsTo(User, {foreignKey: <span class="hljs-string">'userId'</span>});
-User.hasMany(Snippet, {foreignKey: <span class="hljs-string">'userId'</span>});
-Snippet.belongsToMany(Tag, { through: <span class="hljs-string">'snippet_tag'</span>});</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
+              <p>Creates one to many relationship between User and Snippets table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Snippet.belongsTo(User, {foreignKey: <span class="hljs-string">'userId'</span>});
+User.hasMany(Snippet, {foreignKey: <span class="hljs-string">'userId'</span>});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
               <p>Creates many to many relationship between Snippets and Taga</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>Tag.belongsToMany(Snippet, { through: <span class="hljs-string">'snippet_tag'</span>});
+            <div class="content"><div class='highlight'><pre>Snippet.belongsToMany(Tag, { through: <span class="hljs-string">'snippet_tag'</span>});
+Tag.belongsToMany(Snippet, { through: <span class="hljs-string">'snippet_tag'</span>});
 
 <span class="hljs-built_in">module</span>.exports = {
   User: User,
   Snippet: Snippet,
-  Tag: Tag,
+  Tag: Tag
 };</pre></div></div>
             
         </li>
