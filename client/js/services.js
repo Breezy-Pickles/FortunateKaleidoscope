@@ -4,6 +4,7 @@ angular.module('sniphub.services', [])
 
 .factory('SniphubServices', function ($http) {
 
+  // grabs all the tags from tag table 
   var fetchTags = function () { 
     return $http({
       method: 'GET',
@@ -15,6 +16,7 @@ angular.module('sniphub.services', [])
     });
   };
 
+  // grabs all snippets from database 
   var fetchTopTen = function () {
     return $http({
       method: 'GET',
@@ -27,6 +29,7 @@ angular.module('sniphub.services', [])
     });
   };
 
+  // add snippet with associated tags to database
   var addSnippet = function ( user, text, title, tabPrefix, scope, tags, forkedFrom) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
@@ -49,6 +52,7 @@ angular.module('sniphub.services', [])
     });
   };
 
+  // updates snippets with associated tags in database
   var updateSnippet = function ( snippetId, user, text, title, tabPrefix, scope, tags, forkedFrom) {
     forkedFrom = forkedFrom || null;
     return $http({
@@ -70,6 +74,7 @@ angular.module('sniphub.services', [])
 
   };
 
+  //fetches all snippets associated with current user
   var fetchByUser = function ( user ) {
     // /api/user/:userId ->
     return $http({
@@ -83,6 +88,7 @@ angular.module('sniphub.services', [])
     });
   };
 
+  // grabs a specific snippet from database by id 
   var fetchBySnippetId = function ( user, id ) {
     return $http({
       method: 'GET',
@@ -94,19 +100,6 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var searchByTerm = function ( term ) {
-    return $http({
-      method: 'POST',
-      url: '/api/search',
-      data: { "term" : term }
-    }).then(function successCallback ( response ) {
-      //store all links in scope.data
-      return response;
-    }, function errorCallback ( response ) {
-      console.log('Error in getting snippets from db');
-    });
-  };
-
   var tags = [];
   return {
     updateSnippet: updateSnippet,
@@ -114,7 +107,6 @@ angular.module('sniphub.services', [])
     fetchTopTen : fetchTopTen,
     addSnippet : addSnippet,
     fetchByUser: fetchByUser,
-    searchByTerm : searchByTerm,
     fetchTags: fetchTags,
     tags: tags
   };
