@@ -4,7 +4,6 @@ var db = require('../db/dbconfig');
 var User = db.User;
 var Snippet = db.Snippet;
 var Tag = db.Tag;
-var Sequelize = require('Sequelize');
 
 module.exports = {
   findOrCreateUser: function (profile) {
