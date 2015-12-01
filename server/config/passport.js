@@ -7,7 +7,7 @@ var GitHubStrategy = require('passport-github2').Strategy;
 if (process.env.NODE_ENV === 'production') {
   var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
   var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-  var CALLBACK_URL = 'https://sniphub.herokuapp.com/auth/github/callback';
+  var CALLBACK_URL = 'https://rocky-meadow-5433.herokuapp.com/auth/github/callback';
 } else {
   // Using Dev Credentials
   var GITHUB_CLIENT_ID = require('../lib/secrets').GITHUB_CLIENT_ID;
