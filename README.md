@@ -18,10 +18,6 @@
 1. [Team](#team)
 1. [Contributing](#contributing)
 
-## Usage
-
-> Some usage instructions
-
 ## Requirements
 
 - Angular
