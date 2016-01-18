@@ -1,5 +1,7 @@
 # SnipHub
 
+![SnipHub](readme/sniphub.png)
+
 > A Github-like platofrm for creating and sharing your most-loved snippets. This application is an extension of the original SnipHub, found [here.](https://github.com/FortunateKaleidoscope/FortunateKaleidoscope)
 
 ## Team
