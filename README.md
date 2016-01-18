@@ -1,12 +1,12 @@
 # SnipHub
 
-> A Github-like platofrm for creating and sharing your most-loved snippets.
+> A Github-like platofrm for creating and sharing your most-loved snippets. This application is an extension of the original SnipHub, found [here.](https://github.com/FortunateKaleidoscope/FortunateKaleidoscope)
 
 ## Team
 
-  - __Product Owner__: Lauren Mendoza
-  - __Scrum Master__: Yilen Pan
-  - __Development Team Members__: Todd Levin, Yilen Pan, Lauren Mendoza
+  - __Product Owner__: Tracy Duong
+  - __Scrum Master__: Andrew Deal
+  - __Development Team Members__: Andrew Deal, CJ Apel, Kim Ha, Tracy Duong
 
 ## Table of Contents
 
